@@ -1,0 +1,121 @@
+/* Product Carousel Block - SCSS with BEM */
+.product-carousel {
+  padding: 60px $spacing-lg;
+  background-color: $color-white;
+
+  @include breakpoint(md-max) {
+    padding: 0;
+  }
+
+  &__container {
+    max-width: 980px;
+    margin: 0 auto;
+    @include breakpoint(md-max) {
+      margin-top: 60px
+    }
+  }
+
+  &__title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    color: $color-text-dark;
+    margin: 0 0 30px 0;
+    text-align: center;
+
+    @include breakpoint(md-max) {
+      font-size: 24px;
+      line-height: 48px;
+      text-align: center;
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 60px;
+    margin-bottom: $spacing-xl;
+
+    @include breakpoint(lg-max) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include breakpoint(md-max) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-md;
+    }
+
+    @include breakpoint(sm-max) {
+      gap: 0.75rem;
+    }
+
+    // Desktop Grid (hidden on mobile)
+    &--desktop {
+      @include breakpoint(md-max) {
+        display: none;
+      }
+    }
+
+    // Mobile Swiper (hidden on desktop)
+    &--mobile {
+      display: none;
+
+      @include breakpoint(md-max) {
+        display: block;
+        margin-bottom: $spacing-lg;
+      }
+    }
+  }
+
+  &__swiper {
+    width: 100%;
+    padding: 0 $spacing-md;
+    margin-left: -$spacing-md;
+    margin-right: -$spacing-md;
+    @include breakpoint(sm-max) {
+      margin-left: unset;
+      margin-right: unset;
+    }
+  }
+
+  &__slide {
+    width: 160px;
+
+    @include breakpoint(sm-max) {
+      width: 140px;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+
+    @include breakpoint(md-max) {
+      display: none;
+    }
+  }
+
+  &__toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-gray;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-text-dark;
+    }
+  }
+
+  &__icon {
+    transition: $transition-base;
+
+    &--rotated {
+      transform: rotate(180deg);
+    }
+  }
+}

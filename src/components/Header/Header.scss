@@ -1,0 +1,87 @@
+/* Header Block - SCSS with BEM */
+.header {
+  background-color: $color-white;
+  border-bottom: 1px solid $color-gray-200;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: $shadow-sm;
+
+  &__container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: $spacing-md 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    @include breakpoint(md-max) {
+      padding: 15px 30px 30px 30px;
+      height: 75px;
+    }
+  }
+
+  &__menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-dark;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-peach;
+    }
+  }
+
+  &__logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    @include breakpoint(md-max) {
+      top: 15px;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  &__logo-placeholder {
+    width: 100px;
+    height: 50px;
+    background-color: $color-peach;
+    border-radius: $radius-sm;
+    @include breakpoint(md-max) {
+      width: 60px;
+      height: 30px;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    @include breakpoint(md-max) {
+      gap: 10px;
+    }
+  }
+
+  &__icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-text-dark;
+    transition: $transition-fast;
+
+    &:hover {
+      color: $color-peach;
+    }
+  }
+}
