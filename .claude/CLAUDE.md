@@ -1,6 +1,25 @@
+# Project Guidelines
+
+## 🛠 External Tools
+- **Large Context Analysis**: When local context is insufficient, refer to the usage rules in [GEMINI.md](./GEMINI.md) and use the `gemini` CLI.
+
 # AI 開發 Commit Message 撰寫指南
 
 本指南提供 AI 在協助開發時撰寫 Git commit 訊息的標準規範。
+
+## 何時使用CLAUDE.md與何時使用GEMINI.md
+何時使用 Gemini CLI：
+✅ 需要掃描整個專案
+✅ 分析多個大型檔案
+✅ 需要統計或盤點資源
+✅ 跨資料夾的程式碼分析
+✅ 需要完整的架構概覽
+
+何時使用 Claude Code：
+✅ 修改特定檔案
+✅ 實作新功能
+✅ Debug 特定問題
+✅ 需要互動式開發
 
 ## 核心原則
 
