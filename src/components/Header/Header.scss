@@ -145,96 +145,96 @@
       max-height: 400px;
       opacity: 1;
     }
+  }
 
-    &__container {
-      display: flex;
-      max-width: 980px;
-      margin: 0 auto;
-      padding: $spacing-xl 0;
-      gap: $spacing-2xl;
+  &__mega-menu-container {
+    display: flex;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: $spacing-xl 0;
+    gap: 30px;
 
-      @include breakpoint(md-max) {
-        padding: $spacing-xl $spacing-lg;
-      }
-
-      &__categories {
-        display: flex;
-        gap: $spacing-2xl;
-        flex: 1;
-
-        &__category {
-          flex: 1;
-
-          &__title {
-            font-size: $font-size-base;
-            font-weight: $font-weight-semibold;
-            color: $color-text-dark;
-            margin: 0 0 $spacing-md 0;
-          }
-
-          &__items {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-
-            &__item {
-              margin-bottom: $spacing-sm;
-
-              &__link {
-                display: block;
-                color: $color-text-gray;
-                text-decoration: none;
-                font-size: $font-size-sm;
-                transition: $transition-fast;
-                padding: $spacing-xs 0;
-
-                &:hover {
-                  color: $color-peach;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      &__products {
-        display: flex;
-        gap: $spacing-md;
-        flex-shrink: 0;
-        flex: 1;
-
-        &__product {
-          position: relative;
-          width: 180px;
-          height: 180px;
-          border-radius: $radius-sm;
-          overflow: hidden;
-
-          @include breakpoint(md-max) {
-            width: 90px;
-            height: 120px;
-          }
-
-          &__badge {
-            position: absolute;
-            top: $spacing-sm;
-            left: $spacing-sm;
-            background-color: $color-peach;
-            color: $color-white;
-            font-size: $font-size-xs;
-            padding: $spacing-xs $spacing-sm;
-            border-radius: $radius-sm;
-            z-index: 1;
-            font-weight: $font-weight-medium;
-          }
-
-          &__image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-      }
+    @include breakpoint(md-max) {
+      padding: $spacing-xl $spacing-lg;
     }
+  }
+
+  &__mega-menu-categories {
+    display: flex;
+    gap: $spacing-2xl;
+    flex: 1;
+  }
+
+  &__mega-menu-category {
+    flex: 1;
+  }
+
+  &__mega-menu-category-title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $color-text-dark;
+    margin: 0 0 $spacing-md 0;
+  }
+
+  &__mega-menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__mega-menu-item {
+    margin-bottom: $spacing-sm;
+  }
+
+  &__mega-menu-link {
+    display: block;
+    color: $color-text-gray;
+    text-decoration: none;
+    font-size: $font-size-sm;
+    transition: $transition-fast;
+    padding: $spacing-xs 0;
+
+    &:hover {
+      color: $color-peach;
+    }
+  }
+
+  &__mega-menu-products {
+    display: flex;
+    gap: $spacing-md;
+    flex-shrink: 0;
+    flex: 1;
+  }
+
+  &__mega-menu-product {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: $radius-sm;
+    overflow: hidden;
+
+    @include breakpoint(md-max) {
+      width: 90px;
+      height: 120px;
+    }
+  }
+
+  &__mega-menu-product-badge {
+    position: absolute;
+    top: $spacing-sm;
+    left: $spacing-sm;
+    background-color: $color-peach;
+    color: $color-white;
+    font-size: $font-size-xs;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    z-index: 1;
+    font-weight: $font-weight-medium;
+  }
+
+  &__mega-menu-product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
