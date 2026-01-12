@@ -45,3 +45,32 @@ img {
   height: auto;
   display: block;
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba($color-peach, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-peach;
+  border-radius: 10px;
+  transition: $transition-fast;
+
+  &:hover {
+    background: darken($color-peach, 10%);
+  }
+
+  &:active {
+    background: darken($color-peach, 15%);
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $color-peach rgba($color-peach, 0.1);
+}

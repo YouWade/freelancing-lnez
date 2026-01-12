@@ -32,6 +32,9 @@ import userIcon from './icon/User_icon.png';
 import youtubeIcon from './icon/youtube.png';
 import chevronDown from './icon/Chevron_Down.png';
 import chevronRight from './icon/Chevron_Right.png';
+import searchWhite from './icon/Search_Magnifying_Glass.png';
+import shoppingCartWhite from './icon/Shopping_Cart_01.png';
+import userWhite from './icon/User_01.png';
 
 // Images
 import defaultBanner from './images/default_banner.png';
@@ -82,6 +85,9 @@ export const Images = {
   youtubeIcon,
   chevronDown,
   chevronRight,
+  searchWhite,
+  shoppingCartWhite,
+  userWhite,
 
   // Images
   defaultBanner,
