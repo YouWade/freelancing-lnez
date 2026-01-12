@@ -10,166 +10,163 @@
     max-width: 980px;
     margin: 0 auto;
     @include breakpoint(md-max) {
-      margin-top: 60px
+      margin-top: 60px;
     }
-  }
 
-  &__title {
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-semibold;
-    color: $color-text-dark;
-    margin: 0 0 30px 0;
-    text-align: center;
-
-    @include breakpoint(md-max) {
-      font-size: 24px;
-      line-height: 48px;
+    .product-carousel__title {
+      font-size: $font-size-2xl;
+      font-weight: $font-weight-semibold;
+      color: $color-text-dark;
+      margin: 0 0 30px 0;
       text-align: center;
-      margin-bottom: $spacing-lg;
-    }
-  }
-
-  &__items {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 60px;
-    margin-bottom: $spacing-xl;
-
-    @include breakpoint(lg-max) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    @include breakpoint(md-max) {
-      grid-template-columns: repeat(2, 1fr);
-      gap: $spacing-md;
-    }
-
-    @include breakpoint(sm-max) {
-      gap: 0.75rem;
-    }
-
-    // Desktop Grid (hidden on mobile)
-    &--desktop {
-      @include breakpoint(md-max) {
-        display: none;
-      }
-    }
-
-    // Mobile Swiper (hidden on desktop)
-    &--mobile {
-      display: none;
 
       @include breakpoint(md-max) {
-        display: block;
+        font-size: 24px;
+        line-height: 48px;
+        text-align: center;
         margin-bottom: $spacing-lg;
       }
     }
-  }
 
-  &__swiper {
-    width: 100%;
-    overflow: hidden;
+    .product-carousel__items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: 60px;
+      margin-bottom: $spacing-xl;
 
-    @include breakpoint(md-max) {
-      padding-left: $spacing-md;
-    }
+      @include breakpoint(lg-max) {
+        grid-template-columns: repeat(3, 1fr);
+      }
 
-    @include breakpoint(sm-max) {
-      padding: 0 30px;
-    }
-
-    // 最後一個元素的右側間距
-    :global(.swiper-wrapper) {
       @include breakpoint(md-max) {
-        padding-right: $spacing-md;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-md;
       }
 
       @include breakpoint(sm-max) {
-        padding-right: 30px;
+        gap: 0.75rem;
+      }
+
+      &--desktop {
+        @include breakpoint(md-max) {
+          display: none;
+        }
+      }
+
+      &--mobile {
+        display: none;
+
+        @include breakpoint(md-max) {
+          display: block;
+          margin-bottom: $spacing-lg;
+        }
       }
     }
-  }
 
-  &__slide {
-    width: 160px;
+    .product-carousel__swiper {
+      width: 100%;
+      overflow: hidden;
 
-    @include breakpoint(sm-max) {
-      width: 140px;
+      @include breakpoint(md-max) {
+        padding-left: $spacing-md;
+      }
+
+      @include breakpoint(sm-max) {
+        padding: 0 30px;
+      }
+
+      :global(.swiper-wrapper) {
+        @include breakpoint(md-max) {
+          padding-right: $spacing-md;
+        }
+
+        @include breakpoint(sm-max) {
+          padding-right: 30px;
+        }
+      }
+
+      .product-carousel__slide {
+        width: 160px;
+
+        @include breakpoint(sm-max) {
+          width: 140px;
+        }
+
+        &--more {
+          width: auto;
+          display: flex;
+          align-items: center;
+          margin: auto 0;
+          margin-left: 31px;
+
+          .product-carousel__more-button {
+            background: none;
+            border: none;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: $transition-fast;
+
+            &:hover {
+              opacity: 0.7;
+
+              .product-carousel__more-icon {
+                transform: translateX(2px);
+              }
+            }
+
+            &:active {
+              transform: scale(0.95);
+            }
+
+            .product-carousel__more-icon {
+              width: 24px;
+              height: 24px;
+              transition: $transition-fast;
+
+              @include breakpoint(sm-max) {
+                width: 36px;
+                height: 36px;
+              }
+            }
+          }
+        }
+      }
     }
 
-    &--more {
-      width: auto;
+    .product-carousel__actions {
       display: flex;
-      align-items: center;
-      margin: auto 0;
-      margin-left: 31px;
-    }
-  }
+      justify-content: center;
 
-  &__more-button {
-    background: none;
-    border: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: $transition-fast;
-
-    &:hover {
-      opacity: 0.7;
-
-      .product-carousel__more-icon {
-        transform: translateX(2px);
+      @include breakpoint(md-max) {
+        display: none;
       }
-    }
 
-    &:active {
-      transform: scale(0.95);
-    }
-  }
+      .product-carousel__toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: $spacing-sm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-text-gray;
+        transition: $transition-fast;
 
-  &__more-icon {
-    width: 24px;
-    height: 24px;
-    transition: $transition-fast;
+        &:hover {
+          color: $color-text-dark;
+        }
 
-    @include breakpoint(sm-max) {
-      width: 36px;
-      height: 36px;
-    }
-  }
+        .product-carousel__icon {
+          transition: $transition-base;
 
-  &__actions {
-    display: flex;
-    justify-content: center;
-
-    @include breakpoint(md-max) {
-      display: none;
-    }
-  }
-
-  &__toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: $spacing-sm;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $color-text-gray;
-    transition: $transition-fast;
-
-    &:hover {
-      color: $color-text-dark;
-    }
-  }
-
-  &__icon {
-    transition: $transition-base;
-
-    &--rotated {
-      transform: rotate(180deg);
+          &--rotated {
+            transform: rotate(180deg);
+          }
+        }
+      }
     }
   }
 }
