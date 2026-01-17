@@ -1,3 +1,10 @@
-/* App - 全局樣式可以放在這裡 */
-// App.jsx 現在只負責路由配置，不再需要特定的樣式
-// 佈局樣式已移至 HomeLayout.scss
+/* HomeLayout Block - SCSS with BEM */
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__main {
+    flex: 1;
+  }
+}

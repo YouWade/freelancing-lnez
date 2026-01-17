@@ -59,6 +59,22 @@
         @include breakpoint(md-max) {
           display: block;
           margin-bottom: $spacing-lg;
+          position: relative;
+        }
+      }
+
+      &--mobile-more {
+        display: none;
+
+        @include breakpoint(md-max) {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding-right: $spacing-md;
+
+          @include breakpoint(sm-max) {
+            padding-right: 30px;
+          }
         }
       }
     }
@@ -84,54 +100,68 @@
           padding-right: 30px;
         }
       }
+    }
 
-      .product-carousel__slide {
-        width: 160px;
-
-        @include breakpoint(sm-max) {
-          width: 140px;
+    :global(.carousel) {
+      &.product-carousel__swiper {
+        @include breakpoint(md-max) {
+          padding-left: $spacing-md;
         }
 
-        &--more {
-          width: auto;
-          display: flex;
-          align-items: center;
-          margin: auto 0;
-          margin-left: 31px;
+        @include breakpoint(sm-max) {
+          padding: 0 30px;
+        }
 
-          .product-carousel__more-button {
-            background: none;
-            border: none;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: $transition-fast;
-
-            &:hover {
-              opacity: 0.7;
-
-              .product-carousel__more-icon {
-                transform: translateX(2px);
-              }
-            }
-
-            &:active {
-              transform: scale(0.95);
-            }
-
-            .product-carousel__more-icon {
-              width: 24px;
-              height: 24px;
-              transition: $transition-fast;
-
-              @include breakpoint(sm-max) {
-                width: 36px;
-                height: 36px;
-              }
-            }
+        :global(.swiper-wrapper) {
+          @include breakpoint(md-max) {
+            padding-right: $spacing-md;
           }
+
+          @include breakpoint(sm-max) {
+            padding-right: 30px;
+          }
+        }
+      }
+    }
+
+    :global(.carousel__slide) {
+      width: 160px;
+
+      @include breakpoint(sm-max) {
+        width: 140px;
+      }
+    }
+
+    .product-carousel__more-button {
+      background: none;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: $transition-fast;
+
+      &:hover {
+        opacity: 0.7;
+
+        .product-carousel__more-icon {
+          transform: translateX(2px);
+        }
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+
+      .product-carousel__more-icon {
+        width: 24px;
+        height: 24px;
+        transition: $transition-fast;
+
+        @include breakpoint(sm-max) {
+          width: 36px;
+          height: 36px;
         }
       }
     }

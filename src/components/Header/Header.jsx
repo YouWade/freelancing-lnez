@@ -1,11 +1,30 @@
 import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Header.scss';
 import { Images } from '@assets';
 
+// 需要橘色 Header 樣式的頁面路徑
+const ORANGE_HEADER_PATHS = ['/login', '/register', '/sso-login', '/user', '/user/orders'];
+
 const Header = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(0);
   const menuRef = useRef(null);
+  const mobileMenuRef = useRef(null);
   const buttonRef = useRef(null);
+
+  // 判斷是否為橘色 Header 頁面
+  const isOrangeHeader = ORANGE_HEADER_PATHS.includes(pathname);
+
+  // 動態設置 theme-color
+  useEffect(() => {
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', isOrangeHeader ? '#fb966e' : '#ffffff');
+    }
+  }, [isOrangeHeader]);
 
   // 選單分類資料
   const menuCategories = [
@@ -33,13 +52,14 @@ const Header = () => {
   // 點擊外部關閉選單
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        isMenuOpen &&
-        menuRef.current &&
-        buttonRef.current &&
-        !menuRef.current.contains(event.target) &&
-        !buttonRef.current.contains(event.target)
-      ) {
+      if (!isMenuOpen) return;
+
+      const isInsideDesktopMenu = menuRef.current?.contains(event.target);
+      const isInsideMobileMenu = mobileMenuRef.current?.contains(event.target);
+      const isInsideButton = buttonRef.current?.contains(event.target);
+      console.log(menuRef,mobileMenuRef);
+
+      if (!isInsideDesktopMenu && !isInsideMobileMenu && !isInsideButton) {
         setIsMenuOpen(false);
       }
     };
@@ -66,19 +86,35 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  
+  // 判斷是否使用白色 icon（橘色 Header 頁面或選單開啟時）
+  const useWhiteIcons = isOrangeHeader || isMenuOpen;
+
+  // 組合 header class
+  const headerClasses = [
+    'header',
+    isMenuOpen ? 'header--menu-open' : '',
+    isOrangeHeader ? 'header--orange' : ''
+  ].filter(Boolean).join(' ');
 
   return (
-    <header className={`header ${isMenuOpen ? 'header--menu-open' : ''}`}>
+    <header className={headerClasses}>
       <div className="header__container">
         <button
           ref={buttonRef}
           className="header__menu-btn"
-          aria-label="Menu"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           onClick={toggleMenu}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
+          {isMenuOpen ? (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="header__menu-icon header__menu-icon--close">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          ) : (
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="header__menu-icon">
+              <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          )}
         </button>
 
         <div className="header__logo">
@@ -87,26 +123,30 @@ const Header = () => {
 
         <nav className="header__nav">
           <button className="header__icon-btn" aria-label="Search">
-            <img src={isMenuOpen ? Images.searchWhite : Images.search} alt="Search" />
+            <img src={useWhiteIcons ? Images.searchWhite : Images.search} alt="Search" />
           </button>
 
           <button className="header__icon-btn" aria-label="Shopping Cart">
-            <img src={isMenuOpen ? Images.shoppingCartWhite : Images.cart} alt="Shopping Cart" />
+            <img src={useWhiteIcons ? Images.shoppingCartWhite : Images.cart} alt="Shopping Cart" />
           </button>
 
-          <button className="header__icon-btn" aria-label="User Account">
-            <img src={isMenuOpen ? Images.userWhite : Images.user} alt="User Account" />
+          <button 
+            className="header__icon-btn" 
+            aria-label="User Account"
+            onClick={() => navigate('/user')}
+          >
+            <img src={useWhiteIcons ? Images.userWhite : Images.user} alt="User Account" />
           </button>
         </nav>
       </div>
 
-      {/* 選單遮罩 */}
+      {/* 選單遮罩 - 僅桌面版 */}
       <div
         className={`header__overlay ${isMenuOpen ? 'header__overlay--active' : ''}`}
         onClick={() => setIsMenuOpen(false)}
       />
 
-      {/* 下拉式 Mega Menu */}
+      {/* 桌面版 Mega Menu */}
       <nav
         ref={menuRef}
         className={`header__mega-menu ${isMenuOpen ? 'header__mega-menu--active' : ''}`}
@@ -144,6 +184,43 @@ const Header = () => {
             ))}
           </div>
         </div>
+      </nav>
+
+      {/* 手機版 Mobile Menu - Drop Down */}
+      <nav
+        ref={mobileMenuRef}
+        className={`header__mobile-menu ${isMenuOpen ? 'header__mobile-menu--active' : ''}`}
+      >
+        {/* 分類 Tabs */}
+        <div className="header__mobile-menu-tabs">
+          {menuCategories.map((category, index) => (
+            <button
+              key={index}
+              className={`header__mobile-menu-tab ${activeCategory === index ? 'header__mobile-menu-tab--active' : ''}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveCategory(index);
+              }}
+            >
+              {category.title}
+            </button>
+          ))}
+        </div>
+
+        {/* 子項目列表 */}
+        <ul className="header__mobile-menu-list">
+          {menuCategories[activeCategory].items.map((item, index) => (
+            <li key={index} className="header__mobile-menu-item">
+              <a
+                href="#"
+                className="header__mobile-menu-link"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
       </nav>
     </header>
   );

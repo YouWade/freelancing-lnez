@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode } from 'swiper/modules';
+import Carousel from '../Carousel/Carousel';
 import ProductCard from '../ProductCard/ProductCard';
 import { Images } from '@assets';
 import './ProductCarousel.scss';
@@ -44,39 +43,35 @@ const ProductCarousel = ({
 
         {/* Mobile Swiper View */}
         <div className="product-carousel__items product-carousel__items--mobile">
-          <Swiper
-            modules={[FreeMode]}
+          <Carousel
+            items={displayedMobileProducts}
             spaceBetween={15}
-            slidesPerView="auto"
-            freeMode={true}
             className="product-carousel__swiper"
           >
-            {displayedMobileProducts.map((product) => (
-              <SwiperSlide key={product.id} className="product-carousel__slide">
-                <ProductCard
-                  title={product.title}
-                  price={product.price}
-                />
-              </SwiperSlide>
-            ))}
-
-            {/* Mobile "Show More" Button - 作為最後一個 SwiperSlide */}
-            {shouldShowMobileButton && !showMoreMobile && (
-              <SwiperSlide className="product-carousel__slide product-carousel__slide--more">
-                <button
-                  className="product-carousel__more-button"
-                  onClick={() => setShowMoreMobile(true)}
-                  aria-label="Show more products"
-                >
-                  <img
-                    src={Images.chevronRight}
-                    alt="Show more"
-                    className="product-carousel__more-icon"
-                  />
-                </button>
-              </SwiperSlide>
+            {(product) => (
+              <ProductCard
+                title={product.title}
+                price={product.price}
+              />
             )}
-          </Swiper>
+          </Carousel>
+
+          {/* Mobile "Show More" Button - 滑動後顯示 */}
+          {shouldShowMobileButton && !showMoreMobile && (
+            <div className="product-carousel__items product-carousel__items--mobile-more">
+              <button
+                className="product-carousel__more-button"
+                onClick={() => setShowMoreMobile(true)}
+                aria-label="Show more products"
+              >
+                <img
+                  src={Images.chevronRight}
+                  alt="Show more"
+                  className="product-carousel__more-icon"
+                />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Desktop Toggle Button */}

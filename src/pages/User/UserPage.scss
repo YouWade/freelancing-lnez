@@ -1,0 +1,755 @@
+/* ==================== 手機版 ==================== */
+.user-page-mobile {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-white;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+
+  /* 桌面版隐藏 */
+  @include breakpoint(md-min) {
+    display: none;
+  }
+
+  /* ==================== Header Bar ==================== */
+  &__header-bar {
+    width: 100%;
+    height: 46px;
+    background-color: $color-peach;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__header-btn {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0 30px;
+    order: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    &--left {
+      order: 1;
+    }
+  }
+
+  &__header-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: 600;
+    color: $color-white;
+    margin: 0;
+    padding: 0;
+    line-height: 80px;
+    white-space: nowrap;
+  }
+
+  &__header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    order: 3;
+    margin-right: 30px;
+  }
+
+  &__header-action-btn {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 0;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  /* ==================== Member Section ==================== */
+  &__member-section {
+    width: 100%;
+    background-color: $color-white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+
+    .user-page-mobile__avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background-color: $color-light-gray;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .user-page-mobile__member-name {
+      font-size: 20px;
+      font-weight: 500;
+      color: $color-text-dark;
+      margin: 0;
+      padding: 0;
+      line-height: 20px;
+      text-align: center;
+    }
+  }
+
+  /* ==================== Divider Line ==================== */
+  &__divider {
+    width: 100%;
+    height: 5px;
+    background-color: $color-light-gray;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  /* ==================== Section (Orders & Tools) ==================== */
+  &__section {
+    width: 100%;
+    padding: 20px 30px;
+    background-color: $color-white;
+    flex-shrink: 0;
+
+    .user-page-mobile__section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      gap: 10px;
+
+      .user-page-mobile__section-title {
+        font-size: 20px;
+        font-weight: 500;
+        color: $color-text-dark;
+        margin: 0;
+        padding: 0;
+        line-height: 20px;
+      }
+
+      .user-page-mobile__view-all {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 5px;
+        font-size: 12px;
+        color: $color-text-dark;
+        text-decoration: none;
+        opacity: 0.5;
+        transition: opacity $transition-base;
+        flex-shrink: 0;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        img {
+          width: 20px;
+          height: 20px;
+          object-fit: contain;
+        }
+      }
+    }
+
+    .user-page-mobile__section-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: $color-text-dark;
+      margin: 0 0 20px 0;
+      padding: 0;
+      line-height: 20px;
+    }
+
+    .user-page-mobile__order-menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+
+      .user-page-mobile__order-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 12px 8px;
+        color: $color-text-dark;
+        text-decoration: none;
+        transition: background-color $transition-base;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-light-gray;
+        }
+
+        &--active {
+          color: $color-peach;
+
+          .user-page-mobile__order-label {
+            color: $color-peach;
+          }
+        }
+
+        .user-page-mobile__order-icon {
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        .user-page-mobile__order-label {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 20px;
+          color: inherit;
+          text-align: center;
+          word-break: break-word;
+        }
+      }
+    }
+
+    .user-page-mobile__tools-menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+
+      .user-page-mobile__tool-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 12px 8px;
+        color: $color-text-dark;
+        text-decoration: none;
+        transition: background-color $transition-base;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $color-light-gray;
+        }
+
+        &--active {
+          color: $color-peach;
+
+          .user-page-mobile__tool-label {
+            color: $color-peach;
+          }
+        }
+
+        .user-page-mobile__tool-icon {
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        .user-page-mobile__tool-label {
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 20px;
+          color: inherit;
+          text-align: center;
+          word-break: break-word;
+        }
+      }
+    }
+  }
+}
+
+/* ==================== 桌面版 ==================== */
+.user-page-desktop {
+  display: none;
+
+  @include breakpoint(md-min) {
+    display: block;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 30px 0;
+  }
+
+  /* ==================== Profile Section ==================== */
+  /* Figma: 基本資料 - 980x100px */
+  &__profile {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  &__profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* Figma: 王小明 - left:121px, top:32px, font-size:36px */
+  &__profile-name {
+    font-size: 36px;
+    font-weight: 500;
+    color: $color-text-dark;
+    margin: 0;
+    margin-left: 21px;
+    line-height: 36px;
+  }
+
+  /* Figma: icons at left:870px, 910px, 950px, top:35px */
+  /* 950-910=40, 910-870=40, so gap is 40px - 30px icon = 10px */
+  &__profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    right: 0;
+    top: 35px;
+  }
+
+  &__profile-action-btn {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: $color-dark;
+    margin-right: 80px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  /* ==================== Container ==================== */
+  &__container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* ==================== Sidebar ==================== */
+  &__sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* ==================== Card ==================== */
+  /* Figma: 我的訂單 - 200x220px, 常用工具 - 200x340px */
+  &__card {
+    background-color: $color-white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+
+    &--orders {
+      height: 220px;
+    }
+  }
+
+  &__card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  &__card-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: $color-text-dark;
+    margin: 0;
+    line-height: 20px;
+  }
+
+  /* Figma: 全部訂單 at left:179px (right edge), top:14px */
+  &__card-link {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba($color-text-dark, 0.5);
+    text-decoration: none;
+    transition: opacity $transition-base;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+  }
+
+  /* ==================== Menu ==================== */
+  /* Figma: 出貨狀態 items at top: 0, 40, 80, 120 (gap: 40px) */
+  /* Figma: 工具列 items at top: 0, 40, 80, 120, 160, 200, 240 (gap: 40px) */
+  &__menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* gap between items is 10px (item height 30px + gap 10px = 40px stride) */
+  }
+
+  &__menu-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: $color-text-dark;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $color-peach;
+
+      .user-page-desktop__menu-label {
+        color: $color-peach;
+      }
+    }
+
+    /* Active state - 使用橙色 #fb966e */
+    &--active {
+      .user-page-desktop__menu-icon img {
+        /* 將黑色圖標轉為橙色 #fb966e */
+        filter: brightness(0) saturate(100%) invert(68%) sepia(44%) saturate(911%) hue-rotate(326deg) brightness(101%) contrast(97%);
+      }
+
+      .user-page-desktop__menu-label {
+        color: $color-peach;
+      }
+    }
+  }
+
+  &__menu-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__menu-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+    transition: color $transition-base;
+  }
+
+  /* ==================== Content ==================== */
+  /* Figma: 最近訂單 - 770x664px at left:210px */
+  &__content {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 14px;
+    overflow: hidden;
+  }
+
+  /* Figma: 最近訂單 title at left:14px, top:14px */
+  /* top:59px - top:14px - title height (20px) = 25px margin-bottom */
+  &__content-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: $color-text-dark;
+    margin: 0 0 25px 0;
+    line-height: 20px;
+  }
+
+  /* ==================== Table Header ==================== */
+  /* Figma: 項目 at top:59px, h:50px */
+  &__table-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+  }
+
+  /* Figma: columns at left: 0, 160, 540, 640 */
+  &__table-col {
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+
+    &--id {
+      left: 0;
+      width: 100px;
+    }
+
+    &--products {
+      left: 160px;
+      width: 60px;
+    }
+
+    &--total {
+      left: 540px;
+      width: 100px;
+    }
+
+    &--status {
+      left: 640px;
+      width: 100px;
+    }
+  }
+
+  /* ==================== Orders List ==================== */
+  /* Figma: 小項目 at top:124px (65px from table header bottom) */
+  &__orders-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ==================== Order Item ==================== */
+  /* Figma: each item is 740x140px, dividers at 160px intervals */
+  &__order-item {
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* ==================== Order Row ==================== */
+  &__order-row {
+    display: block;
+    width: 100%;
+    height: 80px;
+    position: relative;
+  }
+
+  /* Figma: order ID at left:0, top:39.5px - 12.5px = 27px */
+  &__order-id {
+    position: absolute;
+    left: 0;
+    top: 27px;
+    width: 60px;
+    font-size: 12px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+  }
+
+  /* Figma: 商品序 at left:160px, top:0, w:380px, h:80px */
+  &__order-products {
+    position: absolute;
+    left: 160px;
+    top: 0;
+    width: 380px;
+    height: 80px;
+    overflow: hidden;
+  }
+
+  /* 商品圖片容器 - 使用 flex 而非 carousel */
+  &__products-wrapper {
+    display: flex;
+    gap: 3px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Figma: 照片 80x80px */
+  &__product-thumb {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: #ccc;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* Figma: gradient fade 150px wide, from transparent to white at 50% */
+  &__products-fade {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 80px;
+    width: 150px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), $color-white 50%);
+    pointer-events: none;
+  }
+
+  /* Figma: total at left:540px, top:33.5px - 12.5px = 21px */
+  &__order-total {
+    position: absolute;
+    left: 540px;
+    top: 21px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  /* Figma: status at left:640px (calc(50%+270px)), top:23px */
+  &__order-status {
+    position: absolute;
+    left: 640px;
+    top: 23px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba($color-text-dark, 0.5);
+    line-height: 20px;
+  }
+
+  /* ==================== Order Actions ==================== */
+  /* Figma: buttons at top:100px, right:0, right:99px, right:198px */
+  &__order-actions {
+    display: flex;
+    gap: 9px;
+    margin-top: 20px;
+    justify-content: flex-end;
+  }
+
+  /* Figma: 按鈕 px:15px, py:10px, border-radius:10px */
+  &__action-btn {
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all $transition-base;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 20px;
+
+    /* Figma: primary - bg:#fb966e, color:white */
+    &--primary {
+      background-color: $color-peach;
+      color: $color-white;
+      border: none;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    /* Figma: secondary - bg:transparent, color:#fb966e, border:#fb966e */
+    &--secondary {
+      background-color: transparent;
+      color: $color-peach;
+      border: 1px solid $color-peach;
+
+      &:hover {
+        background-color: rgba($color-peach, 0.1);
+      }
+    }
+  }
+}

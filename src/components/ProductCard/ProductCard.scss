@@ -18,11 +18,13 @@
   }
 
   &__image {
-    width: 100%;
+    width: 200px;
+    height: 200px;
     overflow: hidden;
-    aspect-ratio: 1;
 
     @include breakpoint(md-min) {
+      width: 100%;
+      height: auto;
       aspect-ratio: auto;
     }
 

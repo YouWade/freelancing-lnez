@@ -1,5 +1,5 @@
-import HeroBanner from '../../components/HeroBanner/HeroBanner';
-import ProductCarousel from '../../components/ProductCarousel/ProductCarousel';
+import HeroBanner from '@components/HeroBanner/HeroBanner';
+import ProductCarousel from '@components/ProductCarousel/ProductCarousel';
 import './HomePage.scss';
 
 const HomePage = () => {

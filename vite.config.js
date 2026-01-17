@@ -10,6 +10,8 @@ export default defineConfig({
       // 用 new URL 搭配 import.meta.url 來解析路徑
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
+      '@data': fileURLToPath(new URL('./src/data', import.meta.url)),
+      '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
     },
   },
   css: {

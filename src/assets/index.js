@@ -8,7 +8,7 @@ import caretUpMdIcon from './icon/Caret_UP_MD_icon.png';
 import chatDotsIcon from './icon/Chat_Dots_icon.png';
 import chevronLeftIcon from './icon/Chevron_Left_icon.png';
 import circleCheckIcon from './icon/Circle_Check_icon.png';
-import circleHelpIcon from './icon/Circle_Help_icon.png';
+import circleHelpIcon from './icon/Circle_Help.png';
 import closeSmIcon from './icon/Close_SM_icon.png';
 import creditCardIcon from './icon/Credit_Card_icon.png';
 import defaultImageIcon from './icon/default_image_icon.png';
@@ -35,13 +35,29 @@ import chevronRight from './icon/Chevron_Right.png';
 import searchWhite from './icon/Search_Magnifying_Glass.png';
 import shoppingCartWhite from './icon/Shopping_Cart_01.png';
 import userWhite from './icon/User_01.png';
-
+import caretCircleLeft from './icon/Caret_Circle_Left.png';
+import shoppingBag01 from './icon/Shopping_Bag_01.png';
+import downloadPackage from './icon/Download_Package.png';
+import wavyCheck from './icon/Wavy_Check.png';
+import chevronRightMd from './icon/Chevron_Right_MD.png';
+import bellIcon from './icon/Bell.png';
+import settingsIcon from './icon/Settings.png';
 // Images
 import defaultBanner from './images/default_banner.png';
 import defaultMobileBanner from './images/default_mobile_banner.png';
 import heroBanner from './images/hero_banner.png';
 import heroMobileBanner from './images/hero_mobile_banner.png';
 import productDefault from './images/product_default.png';
+import productImage1 from './images/product_image_1.png';
+import productImage2 from './images/product_image_2.png';
+import productImage3 from './images/product_image_3.png';
+import productImage4 from './images/product_image_4.png';
+import productImage5 from './images/product_image_5.png';
+import productImage6 from './images/product_image_6.png';
+import productImage7 from './images/product_image_7.png';
+import productImage8 from './images/product_image_8.png';
+import productImage9 from './images/product_image_9.png';
+import productImage10 from './images/product_image_10.png';
 
 export const Images = {
   // Icons (舊的別名保持相容性)
@@ -88,6 +104,13 @@ export const Images = {
   searchWhite,
   shoppingCartWhite,
   userWhite,
+  caretCircleLeft,
+  shoppingBag01,
+  downloadPackage,
+  wavyCheck,
+  chevronRightMd,
+  bellIcon,
+  settingsIcon,
 
   // Images
   defaultBanner,
@@ -95,4 +118,14 @@ export const Images = {
   heroBanner,
   heroMobileBanner,
   productDefault,
+  productImage1,
+  productImage2,
+  productImage3,
+  productImage4,
+  productImage5,
+  productImage6,
+  productImage7,
+  productImage8,
+  productImage9,
+  productImage10,
 };

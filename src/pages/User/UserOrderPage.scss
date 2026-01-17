@@ -1,0 +1,261 @@
+.user-order-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: $color-white;
+  display: flex;
+  flex-direction: column;
+
+  /* ==================== Header Bar ==================== */
+  &__header-bar {
+    width: 100%;
+    height: 80px;
+    background-color: $color-peach;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-shrink: 0;
+  }
+
+  &__back-btn {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  &__header-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    font-weight: 600;
+    color: $color-white;
+    margin: 0;
+    padding: 0;
+    line-height: 80px;
+    white-space: nowrap;
+  }
+
+  &__header-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-left: auto;
+  }
+
+  &__header-icon-btn {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  /* ==================== Filter Bar ==================== */
+  &__filter-bar {
+    width: 100%;
+    background-color: $color-light-gray;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    padding: 0;
+    margin: 0;
+    flex-shrink: 0;
+    height: 80px;
+
+    @include hide-scrollbar;
+  }
+
+  &__filter-tab {
+    flex-shrink: 0;
+    padding: 30px 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba($color-text-dark, 0.2);
+    transition: color $transition-base;
+    text-align: center;
+    white-space: nowrap;
+    position: relative;
+    height: 80px;
+    display: flex;
+    align-items: center;
+
+    &--active {
+      color: $color-text-dark;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: $color-peach;
+      }
+    }
+  }
+
+  /* ==================== Orders List ==================== */
+  &__orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ==================== Order Card ==================== */
+  &__order-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    background-color: $color-white;
+    padding: 30px;
+    margin: 0;
+    border-radius: 0;
+    border-bottom: 5px solid $color-light-gray;
+  }
+
+  /* ==================== Order Header ==================== */
+  &__order-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+
+  &__order-id {
+    font-size: 12px;
+    font-weight: 500;
+    color: $color-text-dark;
+  }
+
+  &__order-status {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba($color-text-dark, 0.5);
+  }
+
+  /* ==================== Product Images ==================== */
+  &__order-products {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 215px;
+    flex-shrink: 0;
+  }
+
+  &__carousel {
+    height: 100%;
+  }
+
+  &__product-image-wrapper {
+    width: 180px;
+    height: 215px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: #ccc;
+  }
+
+  &__product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ==================== Order Actions ==================== */
+  &__order-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  &__action-btn {
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all $transition-base;
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    &--primary {
+      background-color: $color-peach;
+      color: $color-white;
+      border: none;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &--secondary {
+      background-color: transparent;
+      color: $color-peach;
+      border: 1px solid $color-peach;
+
+      &:hover {
+        background-color: rgba($color-peach, 0.1);
+      }
+    }
+  }
+
+  /* ==================== Empty State ==================== */
+  &__empty {
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+    color: rgba($color-text-dark, 0.5);
+    font-size: 16px;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

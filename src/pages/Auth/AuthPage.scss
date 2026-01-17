@@ -1,0 +1,935 @@
+@use "sass:color";
+
+.auth-page {
+  background-color: $color-white;
+  padding-top: 5.5vw;
+  position: relative;
+
+  @include breakpoint(lg-max) {
+    padding: 20px 30px 40px;
+    min-height: 100vh;
+  }
+
+  &__back-btn {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    cursor: pointer;
+    color: $color-peach;
+    align-items: center;
+    justify-content: center;
+    transition: $transition-fast;
+    z-index: 10;
+    border: unset;
+
+    @include breakpoint(lg-max) {
+      display: flex;
+    }
+
+    &:hover {
+      background-color: rgba($color-peach, 0.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__container {
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+
+    @include breakpoint(lg-max) {
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 50px;
+    }
+  }
+
+  &__header {
+    flex-shrink: 0;
+    padding-top: 0;
+    margin-right: auto;
+
+    @include breakpoint(lg-max) {
+      padding-top: 0;
+      text-align: center;
+      margin-right: 0;
+      margin-bottom: 30px;
+    }
+  }
+
+  &__title {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-normal;
+    color: $color-text-dark;
+    margin: 0;
+    line-height: 1.3;
+
+    @include breakpoint(lg-max) {
+      font-size: 28px;
+    }
+  }
+
+  &__subtitle {
+    font-size: $font-size-base;
+    color: $color-dark-50;
+    margin: 8px 0 0 0;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+      margin-top: 4px;
+    }
+  }
+
+  &__content {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 600px;
+
+    @include breakpoint(lg-max) {
+      max-width: 100%;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__field {
+    margin-bottom: 20px;
+
+    @include breakpoint(lg-max) {
+      margin-bottom: 16px;
+    }
+  }
+
+  &__label {
+    display: block;
+    font-size: $font-size-base;
+    color: $color-text-dark;
+    margin-bottom: 8px;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+      margin-bottom: 6px;
+    }
+  }
+
+  &__input-wrapper {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
+    font-size: $font-size-base;
+    color: $color-text-dark;
+    background-color: $color-light-gray;
+    border: 1px solid $color-dark-50;
+    border-radius: $radius-md;
+    outline: none;
+    transition: $transition-fast;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      background-color: $color-white;
+      box-shadow: inset 0 0 0 1px $color-gray;
+    }
+
+    &::placeholder {
+      color: $color-text-light-gray;
+    }
+  }
+
+  &__password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: $color-text-light-gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition-fast;
+    z-index: 1;
+
+    &:hover {
+      color: $color-text-gray;
+    }
+  }
+
+  &__options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+
+    @include breakpoint(lg-max) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+
+    input {
+      display: none;
+
+      &:checked + .auth-page__checkbox-mark {
+        background-color: $color-peach;
+        border-color: $color-peach;
+
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__checkbox-mark {
+    width: 20px;
+    height: 20px;
+    border: 1px solid $color-dark-50;
+    border-radius: 3px;
+    margin-right: 8px;
+    position: relative;
+    transition: $transition-fast;
+
+    @include breakpoint(lg-max) {
+      width: 18px;
+      height: 18px;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 6px;
+      height: 10px;
+      border: solid $color-white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: $transition-fast;
+
+      @include breakpoint(lg-max) {
+        left: 5px;
+        top: 1px;
+        width: 5px;
+        height: 9px;
+      }
+    }
+  }
+
+  &__checkbox-text {
+    font-size: $font-size-base;
+    color: $color-dark-50;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__forgot-link {
+    font-size: $font-size-base;
+    color: $color-dark-50;
+    text-decoration: none;
+    transition: $transition-fast;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+    }
+
+    &:hover {
+      color: $color-peach;
+    }
+  }
+
+  &__submit-btn {
+    width: 100%;
+    height: 48px;
+    background-color: $color-peach;
+    color: $color-white;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    border: none;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: $transition-fast;
+    margin-bottom: 16px;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+      margin-bottom: 12px;
+    }
+
+    &:hover {
+      background-color: color.adjust($color-peach, $lightness: -8%);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__social {
+    margin-bottom: 50px;
+
+    @include breakpoint(lg-max) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__social-text {
+    font-size: $font-size-base;
+    color: $color-dark-50;
+    text-align: center;
+    margin: 0 0 16px 0;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+      margin-bottom: 12px;
+    }
+  }
+
+  &__social-buttons {
+    display: flex;
+    gap: 10px;
+
+    @include breakpoint(lg-max) {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  &__social-btn {
+    flex: 1;
+    height: 45px;
+    background-color: $color-white;
+    border: 1px solid $color-peach;
+    border-radius: 10px;
+    font-size: $font-size-sm;
+    color: $color-peach;
+    cursor: pointer;
+    transition: $transition-fast;
+
+    &:hover {
+      background-color: rgba($color-peach, 0.05);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: $color-dark-50;
+    margin-bottom: 30px;
+
+    &--social {
+      height: 1px;
+      margin-bottom: 24px;
+      background-color: $color-dark-50;
+    }
+
+    @include breakpoint(lg-max) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__footer-link {
+    font-size: $font-size-base;
+    color: $color-dark-50;
+    text-decoration: none;
+    transition: $transition-fast;
+
+    @include breakpoint(lg-max) {
+      font-size: $font-size-sm;
+    }
+
+    &:hover {
+      color: $color-peach;
+    }
+  }
+
+  &--login {
+    @include breakpoint(lg-max) {
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .auth-page__back-btn {
+      @include breakpoint(lg-max) {
+        top: calc(env(safe-area-inset-top, 44px) + 9px);
+        left: 20px;
+      }
+    }
+
+    .auth-page__container {
+      @include breakpoint(lg-max) {
+        padding-top: calc(env(safe-area-inset-top, 44px) + 141px);
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: calc(env(safe-area-inset-bottom, 34px) + 40px);
+      }
+    }
+
+    .auth-page__header {
+      @include breakpoint(lg-max) {
+        height: 36px;
+        margin-bottom: 58px;
+      }
+    }
+
+    .auth-page__title {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-4xl;
+        line-height: 36px;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .auth-page__field {
+      @include breakpoint(lg-max) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .auth-page__label {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+        margin-bottom: 5px;
+      }
+    }
+
+    .auth-page__input {
+      @include breakpoint(lg-max) {
+        height: 50px;
+        font-size: $font-size-base;
+        background-color: $color-light-gray;
+        border: 1px solid $color-dark-50;
+        border-radius: 5px;
+
+        &:focus,
+        &:not(:placeholder-shown) {
+          background-color: $color-white;
+        }
+      }
+    }
+
+    .auth-page__checkbox-mark {
+      @include breakpoint(lg-max) {
+        width: 20px;
+        height: 20px;
+        border: 1px solid $color-dark-50;
+      }
+
+      &::after {
+        @include breakpoint(lg-max) {
+          left: 6px;
+          top: 2px;
+          width: 6px;
+          height: 10px;
+        }
+      }
+    }
+
+    .auth-page__checkbox-text {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .auth-page__options {
+      justify-content: flex-start;
+
+      @include breakpoint(lg-max) {
+        margin-bottom: 96px;
+      }
+    }
+
+    .auth-page__submit-btn {
+      @include breakpoint(lg-max) {
+        @include flex-center;
+        gap: 10px;
+        height: auto;
+        padding: 14px 27px;
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-semibold;
+        background-color: $color-peach;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+    }
+
+    .auth-page__social {
+      margin-top: 0;
+
+      @include breakpoint(lg-max) {
+        margin-bottom: 0;
+      }
+    }
+
+    .auth-page__divider--social,
+    .auth-page__social-text {
+      @include breakpoint(lg-max) {
+        display: none;
+      }
+    }
+
+    .auth-page__social-buttons {
+      @include breakpoint(lg-max) {
+        gap: 10px;
+      }
+    }
+
+    .auth-page__social-btn {
+      @include breakpoint(lg-max) {
+        @include flex-center;
+        gap: 10px;
+        height: auto;
+        padding: 14px 27px;
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-semibold;
+        background-color: transparent;
+        border: 1px solid $color-peach;
+        border-radius: 10px;
+        color: $color-peach;
+      }
+    }
+
+    .auth-page__divider {
+      @include breakpoint(lg-max) {
+        margin-top: 49px;
+        margin-bottom: 40px;
+      }
+    }
+
+    .auth-page__footer--login {
+      @include breakpoint(lg-max) {
+        text-align: center;
+      }
+    }
+
+    .auth-page__footer-link {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  &--register {
+    @include breakpoint(lg-max) {
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .auth-page__back-btn {
+      @include breakpoint(lg-max) {
+        top: calc(env(safe-area-inset-top, 44px) + 9px);
+        left: 20px;
+      }
+    }
+
+    .auth-page__container {
+      @include breakpoint(lg-max) {
+        padding-top: calc(env(safe-area-inset-top, 44px) + 92px);
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: calc(env(safe-area-inset-bottom, 34px) + 40px);
+      }
+    }
+
+    .auth-page__header {
+      @include breakpoint(lg-max) {
+        height: 64px;
+        margin-bottom: 30px;
+      }
+    }
+
+    .auth-page__title {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-4xl;
+        line-height: 36px;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .auth-page__subtitle {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+        margin-top: 8px;
+        color: $color-dark-50 !important;
+      }
+    }
+
+    .auth-page__field {
+      @include breakpoint(lg-max) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .auth-page__label {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+        margin-bottom: 5px;
+      }
+    }
+
+    .auth-page__input {
+      @include breakpoint(lg-max) {
+        height: 50px;
+        font-size: $font-size-base;
+        background-color: $color-light-gray;
+        border: 1px solid $color-dark-50;
+        border-radius: 5px;
+
+        &:focus,
+        &:not(:placeholder-shown) {
+          background-color: $color-white;
+        }
+      }
+    }
+
+    .auth-page__checkbox-mark {
+      @include breakpoint(lg-max) {
+        width: 20px;
+        height: 20px;
+        border: 1px solid $color-dark-50;
+      }
+
+      &::after {
+        @include breakpoint(lg-max) {
+          left: 6px;
+          top: 2px;
+          width: 6px;
+          height: 10px;
+        }
+      }
+    }
+
+    .auth-page__checkbox-text {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .auth-page__options {
+      justify-content: flex-start;
+
+      @include breakpoint(lg-max) {
+        margin-bottom: 50px;
+      }
+    }
+
+    .auth-page__submit-btn {
+      @include breakpoint(lg-max) {
+        @include flex-center;
+        gap: 10px;
+        height: auto;
+        padding: 14px 27px;
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-semibold;
+        background-color: $color-peach;
+        border: 2px solid $color-peach;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+    }
+
+    .auth-page__social {
+      margin-top: 0;
+
+      @include breakpoint(lg-max) {
+        margin-bottom: 0;
+      }
+    }
+
+    .auth-page__divider--social,
+    .auth-page__social-text {
+      @include breakpoint(lg-max) {
+        display: none;
+      }
+    }
+
+    .auth-page__social-buttons {
+      @include breakpoint(lg-max) {
+        gap: 10px;
+      }
+    }
+
+    .auth-page__social-btn {
+      @include breakpoint(lg-max) {
+        @include flex-center;
+        gap: 10px;
+        height: auto;
+        padding: 14px 27px;
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-semibold;
+        background-color: transparent;
+        border: 1px solid $color-peach;
+        border-radius: 10px;
+        color: $color-peach;
+      }
+    }
+
+    .auth-page__divider {
+      @include breakpoint(lg-max) {
+        margin-top: 49px;
+        margin-bottom: 40px;
+      }
+    }
+
+    .auth-page__footer--register {
+      @include breakpoint(lg-max) {
+        text-align: center;
+      }
+    }
+
+    .auth-page__footer-link {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  &--sso-login {
+    @include breakpoint(lg-max) {
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    .auth-page__back-btn {
+      @include breakpoint(lg-max) {
+        top: calc(env(safe-area-inset-top, 44px) + 9px);
+        left: 20px;
+      }
+    }
+
+    .auth-page__container {
+      @include breakpoint(lg-max) {
+        padding-top: calc(env(safe-area-inset-top, 44px) + 102px);
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: calc(env(safe-area-inset-bottom, 34px) + 40px);
+      }
+    }
+
+    .auth-page__header {
+      @include breakpoint(lg-max) {
+        height: 36px;
+        margin-bottom: 40px;
+      }
+    }
+
+    .auth-page__title {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-4xl;
+        line-height: 36px;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .auth-page__field {
+      @include breakpoint(lg-max) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .auth-page__label {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+        margin-bottom: 5px;
+      }
+    }
+
+    .auth-page__input {
+      @include breakpoint(lg-max) {
+        height: 50px;
+        font-size: $font-size-base;
+        background-color: $color-light-gray;
+        border: 1px solid $color-dark-50;
+        border-radius: 5px;
+
+        &:focus,
+        &:not(:placeholder-shown) {
+          background-color: $color-white;
+        }
+      }
+    }
+
+    .auth-page__checkbox-mark {
+      @include breakpoint(lg-max) {
+        width: 20px;
+        height: 20px;
+        border: 1px solid $color-dark-50;
+      }
+
+      &::after {
+        @include breakpoint(lg-max) {
+          left: 6px;
+          top: 2px;
+          width: 6px;
+          height: 10px;
+        }
+      }
+    }
+
+    .auth-page__checkbox-text {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+      }
+    }
+
+    .auth-page__forgot-link {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+        text-align: right;
+      }
+    }
+
+    .auth-page__options {
+      @include breakpoint(lg-max) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+      }
+    }
+
+    .auth-page__submit-btn {
+      @include breakpoint(lg-max) {
+        @include flex-center;
+        gap: 10px;
+        height: auto;
+        padding: 14px 27px;
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-semibold;
+        background-color: $color-peach;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 0;
+      }
+    }
+
+    .auth-page__social {
+      @include breakpoint(lg-max) {
+        margin-top: 58px;
+        margin-bottom: 0;
+      }
+    }
+
+    .auth-page__divider--social {
+      @include breakpoint(lg-max) {
+        display: block;
+        height: 1px;
+        background-color: $color-dark-50;
+        margin-bottom: 28px;
+      }
+    }
+
+    .auth-page__social-text {
+      @include breakpoint(lg-max) {
+        display: block;
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+        color: $color-dark-50;
+        text-align: center;
+        margin-bottom: 27px;
+      }
+    }
+
+    .auth-page__social-buttons {
+      @include breakpoint(lg-max) {
+        gap: 10px;
+      }
+    }
+
+    .auth-page__social-btn {
+      @include breakpoint(lg-max) {
+        @include flex-center;
+        gap: 10px;
+        height: auto;
+        padding: 14px 27px;
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-semibold;
+        background-color: transparent;
+        border: 1px solid $color-peach;
+        border-radius: 10px;
+        color: $color-peach;
+      }
+    }
+
+    .auth-page__divider {
+      @include breakpoint(lg-max) {
+        margin-top: 49px;
+        margin-bottom: 40px;
+      }
+    }
+
+    .auth-page__footer--sso-login {
+      @include breakpoint(lg-max) {
+        text-align: center;
+      }
+    }
+
+    .auth-page__footer-link {
+      @include breakpoint(lg-max) {
+        font-size: $font-size-base;
+        line-height: 20px;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+}

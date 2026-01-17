@@ -1,35 +1,40 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HomePage, Layout, Error } from './pages';
+import { Layout, HomePage, ErrorPage, AuthPage, UserPage, UserOrderPage } from './pages';
 import './App.scss';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
-    errorElement: <Error />,
+    errorElement: <ErrorPage />,
     children: [
+      // 首頁
       {
         index: true,
         element: <HomePage />,
       },
-      // 未來可以在這裡添加更多路由
-      // {
-      //   path: 'products',
-      //   element: <ProductsPage />,
-      // },
-      // {
-      //   path: 'products/:id',
-      //   element: <ProductDetailPage />,
-      //   loader: productLoader,
-      // },
-      // {
-      //   path: 'about',
-      //   element: <AboutPage />,
-      // },
-      // {
-      //   path: 'contact',
-      //   element: <ContactPage />,
-      // },
+      // 登入、註冊、第三方，都共用 AuthPage 元件
+      {
+        path: 'login',
+        element: <AuthPage />,
+      },
+      {
+        path: 'register',
+        element: <AuthPage />,
+      },
+      {
+        path: 'sso-login',
+        element: <AuthPage />,
+      },
+      // User基本資料
+      {
+        path: 'user',
+        element: <UserPage />,
+      },
+      {
+        path: 'user/orders',
+        element: <UserOrderPage />,
+      },
     ],
   },
 ]);

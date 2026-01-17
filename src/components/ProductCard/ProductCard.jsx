@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import './ProductCard.scss';
 import { Images } from '@assets';
 
-const ProductCard = ({ title = '女士短版襯衫', price = '$590' }) => {
+const ProductCard = memo(({ title = '女士短版襯衫', price = '$590' }) => {
   return (
     <article className="product-card">
       <div className="product-card__image">
@@ -25,6 +26,8 @@ const ProductCard = ({ title = '女士短版襯衫', price = '$590' }) => {
       </div>
     </article>
   );
-};
+});
+
+ProductCard.displayName = 'ProductCard';
 
 export default ProductCard;

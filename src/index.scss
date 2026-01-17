@@ -1,3 +1,5 @@
+@use "sass:color";
+
 /* Global Reset & Base Styles */
 * {
   margin: 0;
@@ -62,11 +64,11 @@ img {
   transition: $transition-fast;
 
   &:hover {
-    background: darken($color-peach, 10%);
+    background: color.adjust($color-peach, $lightness: -10%);
   }
 
   &:active {
-    background: darken($color-peach, 15%);
+    background: color.adjust($color-peach, $lightness: -15%);
   }
 }
 
