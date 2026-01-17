@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Images } from '@assets';
+import Carousel from '@components/Carousel/Carousel';
 import {
   USER_MOCK_DATA,
   MY_ORDER_MENU,
@@ -287,16 +288,21 @@ const UserPage = () => {
                   <div className="user-page-desktop__order-row">
                     <div className="user-page-desktop__order-id">{order.id}</div>
                     <div className="user-page-desktop__order-products">
-                      <div className="user-page-desktop__products-wrapper">
-                        {order.products.map((product, idx) => (
-                          <div key={idx} className="user-page-desktop__product-thumb">
+                      <Carousel
+                        items={order.products}
+                        spaceBetween={3}
+                        slidesPerView="auto"
+                        className="user-page-desktop__products-carousel"
+                      >
+                        {(product) => (
+                          <div className="user-page-desktop__product-thumb">
                             <img
                               src={product.image}
-                              alt={`Product ${idx + 1}`}
+                              alt="Product"
                             />
                           </div>
-                        ))}
-                      </div>
+                        )}
+                      </Carousel>
                       <div className="user-page-desktop__products-fade"></div>
                     </div>
                     <div className="user-page-desktop__order-total">${order.totalPrice}</div>

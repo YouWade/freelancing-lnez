@@ -47,6 +47,21 @@ const ProductCarousel = ({
             items={displayedMobileProducts}
             spaceBetween={15}
             className="product-carousel__swiper"
+            moreButton={
+              shouldShowMobileButton && !showMoreMobile ? (
+                <button
+                  className="product-carousel__more-button"
+                  onClick={() => setShowMoreMobile(true)}
+                  aria-label="Show more products"
+                >
+                  <img
+                    src={Images.chevronRight}
+                    alt="Show more"
+                    className="product-carousel__more-icon"
+                  />
+                </button>
+              ) : null
+            }
           >
             {(product) => (
               <ProductCard
@@ -55,23 +70,6 @@ const ProductCarousel = ({
               />
             )}
           </Carousel>
-
-          {/* Mobile "Show More" Button - 滑動後顯示 */}
-          {shouldShowMobileButton && !showMoreMobile && (
-            <div className="product-carousel__items product-carousel__items--mobile-more">
-              <button
-                className="product-carousel__more-button"
-                onClick={() => setShowMoreMobile(true)}
-                aria-label="Show more products"
-              >
-                <img
-                  src={Images.chevronRight}
-                  alt="Show more"
-                  className="product-carousel__more-icon"
-                />
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Desktop Toggle Button */}

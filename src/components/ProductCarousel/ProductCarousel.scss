@@ -81,10 +81,11 @@
 
     .product-carousel__swiper {
       width: 100%;
-      overflow: hidden;
+      position: relative;
 
       @include breakpoint(md-max) {
         padding-left: $spacing-md;
+        padding-right: $spacing-md;
       }
 
       @include breakpoint(sm-max) {

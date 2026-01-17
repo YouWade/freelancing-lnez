@@ -452,6 +452,8 @@
 
   /* Figma: 全部訂單 at left:179px (right edge), top:14px */
   &__card-link {
+    position: absolute;
+    right: -16px;
     display: flex;
     align-items: center;
     gap: 0;
@@ -648,13 +650,15 @@
     overflow: hidden;
   }
 
-  /* 商品圖片容器 - 使用 flex 而非 carousel */
-  &__products-wrapper {
-    display: flex;
-    gap: 3px;
+  /* 商品圖片容器 - 使用 Carousel */
+  &__products-carousel {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+
+    .carousel__slide {
+      width: auto;
+      height: 100%;
+    }
   }
 
   /* Figma: 照片 80x80px */
@@ -681,6 +685,7 @@
     width: 150px;
     background: linear-gradient(to right, rgba(255, 255, 255, 0), $color-white 50%);
     pointer-events: none;
+    z-index: 10;
   }
 
   /* Figma: total at left:540px, top:33.5px - 12.5px = 21px */
