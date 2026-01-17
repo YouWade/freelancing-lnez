@@ -9,9 +9,10 @@ const HIDE_FOOTER_PATHS = ['/login', '/register', '/sso-login'];
 const Layout = () => {
   const { pathname } = useLocation();
   const showFooter = !HIDE_FOOTER_PATHS.includes(pathname);
+  const isMobileNotShowSection = pathname.startsWith('/user');
 
   return (
-    <div className="layout">
+    <div className={`layout ${isMobileNotShowSection ? 'layout--user' : ''}`}>
       <Header />
       <main className="layout__main">
         <Outlet />

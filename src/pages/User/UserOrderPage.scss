@@ -6,15 +6,15 @@
   display: flex;
   flex-direction: column;
 
-  /* 桌面版隱藏 */
-  @include breakpoint(md-min) {
+  /* 桌面版隱藏 (1024px 以上) */
+  @include breakpoint(lg-min) {
     display: none;
   }
 
   /* ==================== Header Bar ==================== */
   &__header-bar {
     width: 100%;
-    height: 80px;
+    height: 48px;
     background-color: $color-peach;
     display: flex;
     align-items: center;
@@ -44,7 +44,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: brightness(0) invert(1);
+      filter: brightness(0);
     }
   }
 
@@ -84,17 +84,19 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      filter: brightness(0);
     }
   }
 
   /* ==================== Filter Bar ==================== */
   &__filter-bar {
     width: 100%;
-    background-color: $color-light-gray;
+    background-color: $color-light-gray; /* Figma: 白色背景 */
     display: flex;
     align-items: center;
     overflow-x: auto;
-    padding: 0;
+    gap: 25px;
+    padding: 30px;
     margin: 0;
     flex-shrink: 0;
     height: 80px;
@@ -104,11 +106,9 @@
 
   &__filter-tab {
     flex-shrink: 0;
-    padding: 30px 20px;
-    background-color: transparent;
     border: none;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 20px;
     font-weight: 500;
     color: rgba($color-text-dark, 0.2);
     transition: color $transition-base;
@@ -121,16 +121,6 @@
 
     &--active {
       color: $color-text-dark;
-
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background-color: $color-peach;
-      }
     }
   }
 
@@ -148,13 +138,12 @@
   &__order-card {
     display: flex;
     flex-direction: column;
-    gap: 0;
     width: 100%;
     background-color: $color-white;
-    padding: 30px;
+    padding: 30px; /* Figma: 左右 30px padding */
     margin: 0;
     border-radius: 0;
-    border-bottom: 5px solid $color-light-gray;
+    border-bottom: 5px solid $color-light-gray; /* Figma: 5px 分隔線 */
   }
 
   /* ==================== Order Header ==================== */
@@ -162,65 +151,94 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   &__order-id {
     font-size: 12px;
     font-weight: 500;
     color: $color-text-dark;
+    line-height: 20px;
   }
 
   &__order-status {
     font-size: 12px;
     font-weight: 500;
     color: rgba($color-text-dark, 0.5);
+    line-height: 20px;
   }
 
   /* ==================== Product Images ==================== */
   &__order-products {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    overflow: hidden;
+    width: calc(100% + 60px); /* 補回左右各 30px 的 padding */
+    margin-left: -30px;      /* 向左突破 card padding */
+    margin-right: -30px;     /* 向右突破 card padding */
+    margin-bottom: 30px;
     position: relative;
-    width: 100%;
-    height: 215px;
-    flex-shrink: 0;
+    overflow: hidden;        /* 確保在大容器內裁剪，但 Swiper 內部 visible */
   }
 
   &__carousel {
-    height: 100%;
+    width: 100%;
+    padding-left: 30px;      /* 讓第一個產品對齊上方的訂單編號 */
+    
+    /* Swiper 特定樣式 - 匹配 ProductCarousel */
+    :global(.swiper) {
+      overflow: visible;     /* 關鍵：讓右側產品可以延伸顯示 */
+    }
+    
+    :global(.swiper-wrapper) {
+      padding-right: 30px;   /* 確保滑到最後右邊有留白 */
+    }
+    
+    .swiper-slide {
+      width: 180px !important;
+      margin-right: 5px;     /* 產品間距 */
+    }
   }
 
   &__product-image-wrapper {
-    width: 180px;
-    height: 215px;
+    width: 180px; /* Figma: 180px 寬度 */
+    height: 215px; /* Figma: 180px 圖片 + 25px 價格 + 10px 間距 */
+    position: relative;
     flex-shrink: 0;
-    overflow: hidden;
-    background-color: #ccc;
   }
 
   &__product-image {
-    width: 100%;
-    height: 100%;
+    width: 180px; /* Figma: 180px × 180px */
+    height: 180px;
     object-fit: cover;
+    background-color: #ccc; /* Figma: 預設背景 */
+    display: block;
+  }
+
+  /* 產品價格標籤 - Figma: 在圖片下方 y:190 位置 */
+  &__product-price {
+    position: absolute;
+    top: 190px; /* Figma: y 座標 190px */
+    left: 0;
+    width: 180px;
+    height: 25px; /* Figma: 高度 25px */
+    font-size: 24px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: flex-end; /* 文字對齊底部 */
+    background: transparent; /* 無背景 */
   }
 
   /* ==================== Order Actions ==================== */
   &__order-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-top: 20px;
-    flex-wrap: wrap;
+    gap: 5px; /* Figma: 按鈕間距 */
     justify-content: flex-end;
   }
 
   &__action-btn {
-    padding: 10px 15px;
+    padding: 10px 15px; /* Figma: 按鈕內距 */
     border-radius: 10px;
     font-size: 16px;
     font-weight: 600;
@@ -228,12 +246,15 @@
     border: none;
     transition: all $transition-base;
     white-space: nowrap;
-    flex-shrink: 0;
+    line-height: 20px;
+    height: 40px; /* Figma: 按鈕高度 40px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &--primary {
       background-color: $color-peach;
       color: $color-white;
-      border: none;
 
       &:hover {
         opacity: 0.9;
@@ -270,7 +291,7 @@
 .user-order-page-desktop {
   display: none;
 
-  @include breakpoint(md-min) {
+  @include breakpoint(lg-min) {
     display: block;
     width: 100%;
     max-width: 980px;
@@ -357,7 +378,6 @@
     flex: 1;
     min-width: 0;
     overflow: hidden;
-    border-radius: 15px;
   }
 
   /* ==================== Table Header ==================== */

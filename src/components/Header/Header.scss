@@ -8,26 +8,46 @@
   transition: background-color $transition-base;
 
   &--menu-open {
-    @include breakpoint(md-min) {
-      background-color: $color-peach;
-      border-bottom-color: $color-peach;
+    background-color: $color-peach;
+    border-bottom-color: $color-peach;
+
+    .header__menu-btn {
+      color: $color-white;
+      &:hover {
+        color: rgba($color-white, 0.8);
+      }
+    }
+
+    .header__icon-btn {
+      color: $color-white;
+      &:hover {
+        color: rgba($color-white, 0.8);
+      }
+    }
+
+    .header__logo-placeholder {
+      background-color: $color-white;
+    }
+
+    // 手機版：選單開啟時仍然保持白色背景和黑色圖標
+    @include breakpoint(md-max) {
+      background-color: $color-white;
+      border-bottom-color: $color-gray-200;
 
       .header__menu-btn {
-        color: $color-white;
-        &:hover {
-          color: rgba($color-white, 0.8);
+        color: $color-text-dark !important;
+        
+        svg, path {
+          stroke: $color-text-dark !important;
         }
       }
 
       .header__icon-btn {
-        color: $color-white;
-        &:hover {
-          color: rgba($color-white, 0.8);
-        }
+        color: $color-text-dark;
       }
 
       .header__logo-placeholder {
-        background-color: $color-white;
+        background-color: $color-peach;
       }
     }
   }

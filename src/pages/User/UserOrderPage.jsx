@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Images } from '@assets';
 import { ORDERS_MOCK_DATA, ORDER_STATUS_FILTERS } from '@data';
 import Carousel from '@components/Carousel/Carousel';
@@ -17,20 +17,18 @@ const ACTION_BUTTON_MAP = {
 
 const UserOrderPage = () => {
   const navigate = useNavigate();
-  const [activeStatus, setActiveStatus] = useState('all');
-  const [displayedOrders, setDisplayedOrders] = useState(ORDERS_MOCK_DATA);
-
-  useEffect(() => {
-    if (activeStatus === 'all') {
-      setDisplayedOrders(ORDERS_MOCK_DATA);
-    } else {
-      setDisplayedOrders(ORDERS_MOCK_DATA.filter((order) => order.status === activeStatus));
-    }
-  }, [activeStatus]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeStatus = searchParams.get('status') || 'all';
 
   const handleStatusClick = useCallback((statusKey) => {
-    setActiveStatus(statusKey);
-  }, []);
+    setSearchParams({ status: statusKey });
+  }, [setSearchParams]);
+
+  const displayedOrders = activeStatus === 'all'
+    ? ORDERS_MOCK_DATA
+    : ORDERS_MOCK_DATA.filter((order) => order.status === activeStatus);
+
+
 
   const handleActionClick = useCallback((action, orderId) => {
     console.log(`Action: ${action}, Order: ${orderId}`);
@@ -113,7 +111,7 @@ const UserOrderPage = () => {
                 <div className="user-order-page__order-products">
                   <Carousel
                     items={order.products}
-                    spaceBetween={3}
+                    spaceBetween={5}
                     className="user-order-page__carousel"
                   >
                     {(product, idx) => (
@@ -123,6 +121,9 @@ const UserOrderPage = () => {
                           alt={`Product ${idx + 1}`}
                           className="user-order-page__product-image"
                         />
+                        <div className="user-order-page__product-price">
+                          ${product.price} ({product.quantity || 1})
+                        </div>
                       </div>
                     )}
                   </Carousel>
@@ -173,7 +174,7 @@ const UserOrderPage = () => {
           </aside>
 
           {/* 右側訂單列表區 */}
-          <main className="user-order-page-desktop__main">
+          <section className="user-order-page-desktop__main">
             {/* 表頭 */}
             <div className="user-order-page-desktop__table-header">
               <span className="user-order-page-desktop__table-col user-order-page-desktop__table-col--id">訂單編號</span>
@@ -198,13 +199,18 @@ const UserOrderPage = () => {
 
                       {/* 商品圖片序列 */}
                       <div className="user-order-page-desktop__order-products">
-                        <div className="user-order-page-desktop__products-wrapper">
-                          {order.products.map((product, idx) => (
-                            <div key={product.id || idx} className="user-order-page-desktop__product-thumb">
-                              <img src={product.image} alt="" />
+                        <Carousel
+                          items={order.products}
+                          spaceBetween={5}
+                          slidesPerView="auto"
+                          className="user-order-page-desktop__carousel"
+                        >
+                          {(product, idx) => (
+                            <div className="user-order-page-desktop__product-thumb">
+                              <img src={product.image} alt={`Product ${idx + 1}`} />
                             </div>
-                          ))}
-                        </div>
+                          )}
+                        </Carousel>
                         {/* 漸層遮罩 */}
                         <div className="user-order-page-desktop__products-fade" />
                       </div>
@@ -236,7 +242,7 @@ const UserOrderPage = () => {
                 ))
               )}
             </div>
-          </main>
+          </section>
         </div>
       </div>
     </>

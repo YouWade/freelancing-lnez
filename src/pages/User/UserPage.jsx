@@ -12,8 +12,8 @@ import './UserPage.scss';
 const ICON_MAP = {
   creditCard: Images.creditCardIcon,
   shoppingBag: Images.shoppingBag01,
-  folderDownload: Images.downloadPackage,
-  circleCheck: Images.wavyCheck,
+  downloadPackage: Images.downloadPackage,
+  wavyCheck: Images.wavyCheck,
   heart02: Images.heart02Icon,
   bookOpen: Images.bookOpenIcon,
   ticketVoucher: Images.ticketVoucherIcon,
@@ -74,8 +74,8 @@ const DESKTOP_ORDERS = [
 const UserPage = () => {
   const user = USER_MOCK_DATA;
   const navigate = useNavigate();
-  const [activeOrderStatus, setActiveOrderStatus] = useState('pending_receipt');
-  const [activeTool, setActiveTool] = useState('history');
+  const [activeOrderStatus, setActiveOrderStatus] = useState(null);
+  const [activeTool, setActiveTool] = useState(null);
 
   const handleMenuItemClick = useCallback((key) => {
     console.log(`Clicked: ${key}`);
@@ -147,7 +147,7 @@ const UserPage = () => {
         <section className="user-page-mobile__section">
           <div className="user-page-mobile__section-header">
             <h3 className="user-page-mobile__section-title">我的訂單</h3>
-            <Link to="/user/orders" className="user-page-mobile__view-all">
+            <Link to="/user/orders?status=all" className="user-page-mobile__view-all">
               全部訂單
               <img src={Images.chevronRightMd} alt="" />
             </Link>
@@ -224,7 +224,7 @@ const UserPage = () => {
             <div className="user-page-desktop__card user-page-desktop__card--orders">
               <div className="user-page-desktop__card-header">
                 <h3 className="user-page-desktop__card-title">我的訂單</h3>
-                <Link to="/user/orders" className="user-page-desktop__card-link">
+                <Link to="/user/orders?status=all" className="user-page-desktop__card-link">
                   全部訂單
                   <img src={Images.chevronRightMd} alt="" />
                 </Link>
@@ -282,47 +282,65 @@ const UserPage = () => {
 
             {/* Orders List */}
             <div className="user-page-desktop__orders-list">
-              {DESKTOP_ORDERS.map((order, index) => (
-                <div key={index} className="user-page-desktop__order-item">
-                  {/* Order Info Row */}
-                  <div className="user-page-desktop__order-row">
-                    <div className="user-page-desktop__order-id">{order.id}</div>
-                    <div className="user-page-desktop__order-products">
-                      <Carousel
-                        items={order.products}
-                        spaceBetween={3}
-                        slidesPerView="auto"
-                        className="user-page-desktop__products-carousel"
+              {(() => {
+                const filteredOrders = DESKTOP_ORDERS.filter(order => !activeOrderStatus || activeOrderStatus === 'all' || order.status === activeOrderStatus);
+                
+                if (filteredOrders.length === 0) {
+                  return (
+                    <div className="user-page-desktop__empty-state">
+                      <p className="user-page-desktop__empty-text">沒有此分類訂單</p>
+                      <button 
+                        className="user-page-desktop__action-btn user-page-desktop__action-btn--primary"
+                        onClick={() => setActiveOrderStatus('all')}
                       >
-                        {(product) => (
-                          <div className="user-page-desktop__product-thumb">
-                            <img
-                              src={product.image}
-                              alt="Product"
-                            />
-                          </div>
-                        )}
-                      </Carousel>
-                      <div className="user-page-desktop__products-fade"></div>
-                    </div>
-                    <div className="user-page-desktop__order-total">${order.totalPrice}</div>
-                    <div className="user-page-desktop__order-status">{order.statusText}</div>
-                  </div>
-
-                  {/* Order Actions */}
-                  <div className="user-page-desktop__order-actions">
-                    {order.actions.map((action) => (
-                      <button
-                        key={action.key}
-                        className={`user-page-desktop__action-btn user-page-desktop__action-btn--${action.type}`}
-                        onClick={() => handleActionClick(action.key, order.id)}
-                      >
-                        {action.label}
+                        顯示全部訂單
                       </button>
-                    ))}
+                    </div>
+                  );
+                }
+
+                return filteredOrders.map((order, index) => (
+                  <div key={index} className="user-page-desktop__order-item">
+                    {/* Order Info Row */}
+                    <div className="user-page-desktop__order-row">
+                      <div className="user-page-desktop__order-id">{order.id}</div>
+                      <div className="user-page-desktop__order-products">
+                        <Carousel
+                          items={order.products}
+                          spaceBetween={3}
+                          slidesPerView="auto"
+                          className="user-page-desktop__products-carousel"
+                        >
+                          {(product) => (
+                            <div className="user-page-desktop__product-thumb">
+                              <img
+                                src={product.image}
+                                alt="Product"
+                              />
+                            </div>
+                          )}
+                        </Carousel>
+                        <div className="user-page-desktop__products-fade"></div>
+                      </div>
+                      <div className="user-page-desktop__order-total">${order.totalPrice}</div>
+                      <div className="user-page-desktop__order-status">{order.statusText}</div>
+                    </div>
+
+                    {/* Order Actions */}
+                    <div className="user-page-desktop__order-actions">
+                      {order.actions.map((action) => (
+                        <button
+                          key={action.key}
+                          className={`user-page-desktop__action-btn user-page-desktop__action-btn--${action.type}`}
+                          onClick={() => handleActionClick(action.key, order.id)}
+                        >
+                          {action.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
         </div>

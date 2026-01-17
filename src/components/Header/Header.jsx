@@ -87,8 +87,41 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   
-  // 判斷是否使用白色 icon（橘色 Header 頁面或選單開啟時）
-  const useWhiteIcons = isOrangeHeader || isMenuOpen;
+  // 判斷是否使用白色 icon（橘色 Header 頁面或選單開啟時，但手機版選單開啟時除外）
+  // 檢測是否為 mobile view (簡單判斷，實際可能需要 resize listener 或 matchMedia)
+  // 但由於這裡主要是 render logic，CSS 已經 override 了 color，這裡主要影響 img src
+  // 我們需要讓 JS 知道現在是 mobile 並且 menu open -> 使用黑色 icon
+  // 由於 RWD 主要由 CSS 控制，這裡我們可以依賴 CSS 隱藏/顯示，或者傳遞正確的 icon
+  // 最簡單的方式：如果不是 orangeHeader，在手機版 menu open 時，仍然認為是 false (使用黑色 icon)
+  // 但問題是我們沒有 easy access to "isMobile" state in JS without adding listener.
+  // 不過，既然 CSS 已經設定了 color: $color-text-dark，SVG fill 會跟隨 currentColor (如果是 SVG)
+  // 但圖像是 img src，所以必須選對圖片
+  
+  // 邏輯修正：
+  // Desktop Menu Open -> Orange BG -> White Icons
+  // Mobile Menu Open -> White BG -> Black Icons
+  // Orange Header Page -> Orange BG -> White Icons (Both Desktop & Mobile usually, but Mobile hides header in orange pages? No, Mobile hides header--orange via display:none)
+  
+  // 所以重點是 Homepage (White BG) -> Open Menu
+  // Desktop: 變橘色 -> White Icons
+  // Mobile: 維持白色 -> Black Icons
+  
+  // 我們可以使用 window.innerWidth 但這在 SSR 或 resize 時有問題。
+  // 不過通常 React 元件 mount 後可以 check。
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 與 SCSS md-min 768px 一致
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const useWhiteIcons = isOrangeHeader || (isMenuOpen && !isMobile);
 
   // 組合 header class
   const headerClasses = [

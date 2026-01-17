@@ -7,4 +7,13 @@
   &__main {
     flex: 1;
   }
+
+  // 針對用戶頁面，在手機版隱藏 Footer
+  &--user {
+    .footer {
+      @media (max-width: 1023px) {
+        display: none !important;
+      }
+    }
+  }
 }

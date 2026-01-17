@@ -45,7 +45,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: brightness(0) invert(1);
+      filter: brightness(0);
     }
 
     &--left {
@@ -94,6 +94,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      filter: brightness(0);
     }
   }
 
@@ -235,6 +236,11 @@
           .user-page-mobile__order-label {
             color: $color-peach;
           }
+
+          .user-page-mobile__order-icon img {
+            /* 將黑色圖標轉為橙色 #fb966e */
+            filter: brightness(0) saturate(100%) invert(68%) sepia(44%) saturate(911%) hue-rotate(326deg) brightness(101%) contrast(97%);
+          }
         }
 
         .user-page-mobile__order-icon {
@@ -249,6 +255,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: brightness(0);
           }
         }
 
@@ -295,6 +302,11 @@
           .user-page-mobile__tool-label {
             color: $color-peach;
           }
+
+          .user-page-mobile__tool-icon img {
+            /* 將黑色圖標轉為橙色 #fb966e */
+            filter: brightness(0) saturate(100%) invert(68%) sepia(44%) saturate(911%) hue-rotate(326deg) brightness(101%) contrast(97%);
+          }
         }
 
         .user-page-mobile__tool-icon {
@@ -309,6 +321,7 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: brightness(0);
           }
         }
 
@@ -547,6 +560,7 @@
     border-radius: 10px;
     padding: 14px;
     overflow: hidden;
+    height: 100%;
   }
 
   /* Figma: 最近訂單 title at left:14px, top:14px */
@@ -606,6 +620,22 @@
   &__orders-list {
     display: flex;
     flex-direction: column;
+    min-height: 200px;
+  }
+
+  &__empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    gap: 20px;
+  }
+
+  &__empty-text {
+    font-size: 16px;
+    color: rgba($color-text-dark, 0.5);
+    margin: 0;
   }
 
   /* ==================== Order Item ==================== */

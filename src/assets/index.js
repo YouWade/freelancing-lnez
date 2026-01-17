@@ -1,5 +1,5 @@
 // Icons
-import bookOpenIcon from './icon/Book_Open_icon.png';
+import bookOpenIcon from './icon/Book_Open_icon.svg';
 import cameraIcon from './icon/Camera_icon.png';
 import cameraSmIcon from './icon/Camera_sm_icon.png';
 import caretCircleLeftIcon from './icon/Caret_Circle_Left_icon.png';
@@ -37,7 +37,7 @@ import shoppingCartWhite from './icon/Shopping_Cart_01.png';
 import userWhite from './icon/User_01.png';
 import caretCircleLeft from './icon/Caret_Circle_Left.png';
 import shoppingBag01 from './icon/Shopping_Bag_01.png';
-import downloadPackage from './icon/Download_Package.png';
+import downloadPackage from './icon/Download_Package.svg';
 import wavyCheck from './icon/Wavy_Check.png';
 import chevronRightMd from './icon/Chevron_Right_MD.png';
 import bellIcon from './icon/Bell.png';
