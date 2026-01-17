@@ -1,9 +1,15 @@
+/* ==================== 手機版 ==================== */
 .user-order-page {
   width: 100%;
   min-height: 100vh;
   background-color: $color-white;
   display: flex;
   flex-direction: column;
+
+  /* 桌面版隱藏 */
+  @include breakpoint(md-min) {
+    display: none;
+  }
 
   /* ==================== Header Bar ==================== */
   &__header-bar {
@@ -234,6 +240,310 @@
       }
     }
 
+    &--secondary {
+      background-color: transparent;
+      color: $color-peach;
+      border: 1px solid $color-peach;
+
+      &:hover {
+        background-color: rgba($color-peach, 0.1);
+      }
+    }
+  }
+
+  /* ==================== Empty State ==================== */
+  &__empty {
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+    color: rgba($color-text-dark, 0.5);
+    font-size: 16px;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+/* ==================== 桌面版 ==================== */
+.user-order-page-desktop {
+  display: none;
+
+  @include breakpoint(md-min) {
+    display: block;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 30px 0;
+  }
+
+  /* ==================== Container ==================== */
+  &__container {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+  }
+
+  /* ==================== Sidebar ==================== */
+  /* Figma: 我的訂單 - 200x236px, border: 1px solid #ccc, border-radius: 10px */
+  &__sidebar {
+    width: 200px;
+    height: 236px;
+    flex-shrink: 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Figma: 我的訂單 title - font-size:20px, top:14px */
+  &__sidebar-title {
+    font-size: 20px;
+    font-weight: 500;
+    color: $color-text-dark;
+    margin: 0 0 20px 0;
+    line-height: 20px;
+  }
+
+  /* Figma: 出貨狀態 - 選單項目列表 */
+  &__sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Figma: 選單項目 - font-size:12px, color:rgba(44,44,44,0.2) */
+  &__sidebar-item {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba($color-text-dark, 0.2);
+    line-height: 20px;
+    text-align: left;
+    transition: color $transition-base;
+    position: relative;
+
+    &:hover {
+      color: $color-peach;
+    }
+
+    /* Figma: active state - color:#fb966e, left bar 3px wide */
+    &--active {
+      color: $color-peach;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 16px;
+        background-color: $color-peach;
+      }
+    }
+  }
+
+  /* ==================== Main Content ==================== */
+  /* Figma: 小項目區塊 - 740px wide, border-radius:15px */
+  &__main {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  /* ==================== Table Header ==================== */
+  /* Figma: 項目 - height:50px, border-bottom: 1px solid #ccc */
+  &__table-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+  }
+
+  /* Figma: columns at left: 0, 160, 540, 640 */
+  &__table-col {
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+
+    &--id {
+      left: 0;
+      width: 100px;
+    }
+
+    &--products {
+      left: 160px;
+      width: 60px;
+    }
+
+    &--total {
+      left: 540px;
+      width: 100px;
+    }
+
+    &--status {
+      left: 640px;
+      width: 100px;
+    }
+  }
+
+  /* ==================== Orders List ==================== */
+  &__orders-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ==================== Order Item ==================== */
+  /* Figma: 每個訂單項目 140px 高度, border-bottom 分隔 */
+  &__order-item {
+    position: relative;
+    border-bottom: 1px solid #ccc;
+    padding: 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  /* ==================== Order Row ==================== */
+  &__order-row {
+    display: block;
+    width: 100%;
+    height: 80px;
+    position: relative;
+    margin-top: 20px;
+  }
+
+  /* Figma: 訂單編號 - left:0, top:27px (垂直置中於80px), font-size:12px */
+  &__order-id {
+    position: absolute;
+    left: 0;
+    top: 27px;
+    width: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+  }
+
+  /* Figma: 商品序 - left:160px, top:0, width:380px, height:80px */
+  &__order-products {
+    position: absolute;
+    left: 160px;
+    top: 0;
+    width: 380px;
+    height: 80px;
+    overflow: hidden;
+  }
+
+  /* 商品圖片容器 - flex 排列 */
+  &__products-wrapper {
+    display: flex;
+    gap: 3px;
+    height: 100%;
+  }
+
+  /* Figma: 照片 - 80x80px, background: #ccc */
+  &__product-thumb {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: #ccc;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* Figma: 漸層遮罩 - 150px wide, from transparent to white at 50% */
+  &__products-fade {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 80px;
+    width: 150px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), $color-white 50%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Figma: 總價 - left:540px, top:21px, font-size:16px */
+  &__order-total {
+    position: absolute;
+    left: 540px;
+    top: 21px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-text-dark;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  /* Figma: 狀態 - left:640px, top:23px, font-size:16px, color:rgba(44,44,44,0.5) */
+  &__order-status {
+    position: absolute;
+    left: 640px;
+    top: 23px;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba($color-text-dark, 0.5);
+    line-height: 20px;
+  }
+
+  /* ==================== Order Actions ==================== */
+  /* Figma: 按鈕區 - top:100px, 靠右對齊 */
+  &__order-actions {
+    display: flex;
+    gap: 9px;
+    padding: 20px 0;
+    justify-content: flex-end;
+  }
+
+  /* Figma: 按鈕 - px:15px, py:10px, border-radius:10px, font-size:16px */
+  &__action-btn {
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all $transition-base;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 20px;
+
+    /* Figma: primary - background:#fb966e, color:white */
+    &--primary {
+      background-color: $color-peach;
+      color: $color-white;
+      border: none;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    /* Figma: secondary - background:transparent, color:#fb966e, border:#fb966e */
     &--secondary {
       background-color: transparent;
       color: $color-peach;
