@@ -4,7 +4,7 @@ import './Header.scss';
 import { Images } from '@assets';
 
 // 需要橘色 Header 樣式的頁面路徑
-const ORANGE_HEADER_PATHS = ['/login', '/register', '/sso-login', '/user', '/user/orders'];
+const ORANGE_HEADER_PATHS = ['/login', '/register', '/sso-login', '/user', '/user/orders', '/cart'];
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -159,7 +159,11 @@ const Header = () => {
             <img src={useWhiteIcons ? Images.searchWhite : Images.search} alt="Search" />
           </button>
 
-          <button className="header__icon-btn" aria-label="Shopping Cart">
+          <button 
+            className="header__icon-btn" 
+            aria-label="Shopping Cart"
+            onClick={() => navigate('/cart')}
+          >
             <img src={useWhiteIcons ? Images.shoppingCartWhite : Images.cart} alt="Shopping Cart" />
           </button>
 

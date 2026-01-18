@@ -4,7 +4,7 @@ import Footer from '@components/Footer/Footer';
 import './Layout.scss';
 
 // 不顯示 Footer 的頁面路徑
-const HIDE_FOOTER_PATHS = ['/login', '/register', '/sso-login'];
+const HIDE_FOOTER_PATHS = ['/login', '/register', '/sso-login', '/cart'];
 
 const Layout = () => {
   const { pathname } = useLocation();

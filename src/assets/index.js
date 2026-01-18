@@ -42,6 +42,8 @@ import wavyCheck from './icon/Wavy_Check.png';
 import chevronRightMd from './icon/Chevron_Right_MD.png';
 import bellIcon from './icon/Bell.png';
 import settingsIcon from './icon/Settings.png';
+import addPlusCircleIcon from './icon/Add_Plus_Circle.png';
+import removeMminusCircleIcon from './icon/Remove_Minus_Circle.png';
 // Images
 import defaultBanner from './images/default_banner.png';
 import defaultMobileBanner from './images/default_mobile_banner.png';
@@ -111,6 +113,8 @@ export const Images = {
   chevronRightMd,
   bellIcon,
   settingsIcon,
+  addPlusCircleIcon,
+  removeMminusCircleIcon,
 
   // Images
   defaultBanner,

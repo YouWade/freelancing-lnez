@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Layout, HomePage, ErrorPage, AuthPage, UserPage, UserOrderPage } from './pages';
+import { Layout, HomePage, ErrorPage, AuthPage, UserPage, UserOrderPage, CartPage } from './pages';
 import './App.scss';
 
 const router = createBrowserRouter([
@@ -12,6 +12,11 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      // 購物車
+      {
+        path: 'cart',
+        element: <CartPage />,
       },
       // 登入、註冊、第三方，都共用 AuthPage 元件
       {
