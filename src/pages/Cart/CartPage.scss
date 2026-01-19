@@ -138,7 +138,7 @@
       display: none;
     }
 
-    &__item {
+    &-item {
       font-size: $font-size-base;
       font-weight: $font-weight-medium;
       color: $color-dark;
@@ -160,7 +160,7 @@
   &__list {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 15px;
   }
 
   &__mobile-summary {

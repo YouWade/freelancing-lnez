@@ -17,16 +17,17 @@
     background-color: transparent;
     margin-bottom: 0;
     align-items: flex-start;
-    border-bottom: 1px solid $color-light-gray;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
   }
 
+  // ==========================================
+  // .cart-item__radio 區塊
+  // ==========================================
   &__radio {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 12px;
+    display: none;
 
     @include breakpoint(md-max) {
       display: flex;
@@ -36,6 +37,7 @@
       flex-shrink: 0;
     }
 
+    // .cart-item__radio-input
     &-input {
       visibility: hidden;
       position: absolute;
@@ -43,6 +45,7 @@
       padding: 0;
     }
 
+    // .cart-item__radio-label
     &-label {
       position: relative;
       cursor: pointer;
@@ -51,6 +54,7 @@
       justify-content: center;
     }
 
+    // .cart-item__radio-button
     &-button {
       height: 24px;
       width: 24px;
@@ -83,17 +87,21 @@
         transition: opacity 0.3s ease;
 
         @include breakpoint(md-max) {
-          height: 8px;
-          width: 8px;
+          height: 12px;
+          width: 12px;
         }
       }
     }
+
+    // .cart-item__radio-input:checked 狀態
+    &-input:checked ~ .cart-item__radio-label .cart-item__radio-button::after {
+      opacity: 1;
+    }
   }
 
-  &__radio-input:checked ~ &__radio-label &__radio-button::after {
-    opacity: 1;
-  }
-
+  // ==========================================
+  // .cart-item__image 區塊
+  // ==========================================
   &__image {
     width: 150px;
     height: 150px;
@@ -117,6 +125,9 @@
     }
   }
 
+  // ==========================================
+  // .cart-item__info 區塊
+  // ==========================================
   &__info {
     display: flex;
     flex-direction: row;
@@ -137,6 +148,7 @@
       margin-top: auto;
     }
 
+    // .cart-item__info-content
     &-content {
       display: flex;
       flex-direction: column;
@@ -151,12 +163,12 @@
       }
     }
 
+    // .cart-item__info-price
     &-price {
       width: 60px;
       font-size: $font-size-base;
       font-weight: $font-weight-medium;
       color: $color-dark;
-      text-align: center;
       margin: 0;
       padding: 0;
       flex-shrink: 0;
@@ -169,6 +181,9 @@
     }
   }
 
+  // ==========================================
+  // .cart-item__name (位於 info-content 內)
+  // ==========================================
   &__name {
     font-size: $font-size-base;
     line-height: 20px;
@@ -185,6 +200,9 @@
     }
   }
 
+  // ==========================================
+  // .cart-item__specs (位於 info-content 內)
+  // ==========================================
   &__specs {
     display: flex;
     flex-direction: column;
@@ -195,6 +213,9 @@
     }
   }
 
+  // ==========================================
+  // .cart-item__spec (位於 specs 內)
+  // ==========================================
   &__spec {
     display: flex;
     align-items: center;
@@ -206,6 +227,7 @@
       font-size: 12px;
     }
 
+    // .cart-item__spec-label
     &-label {
       font-size: 12px;
       color: $color-dark-50;
@@ -218,6 +240,9 @@
     }
   }
 
+  // ==========================================
+  // .cart-item__color-block (位於 spec 內)
+  // ==========================================
   &__color-block {
     width: 15px;
     height: 15px;
@@ -225,6 +250,9 @@
     flex-shrink: 0;
   }
 
+  // ==========================================
+  // .cart-item__size-badge (位於 spec 內)
+  // ==========================================
   &__size-badge {
     font-size: 10px;
     color: $color-dark-50;
@@ -236,6 +264,9 @@
     min-width: 30px;
   }
 
+  // ==========================================
+  // .cart-item__quantity (位於 info 內)
+  // ==========================================
   &__quantity {
     width: 60px;
     height: 26px;
@@ -254,6 +285,7 @@
       margin-top: 23px;
     }
 
+    // .cart-item__quantity-input
     &-input {
       width: 16px;
       height: 24px;
@@ -284,6 +316,7 @@
       }
     }
 
+    // .cart-item__quantity-btn
     &-btn {
       position: absolute;
       width: 20px;
@@ -321,12 +354,14 @@
     }
   }
 
+  // ==========================================
+  // .cart-item__total (位於 info 內)
+  // ==========================================
   &__total {
     width: 60px;
     font-size: $font-size-base;
     font-weight: $font-weight-medium;
     color: $color-dark;
-    text-align: center;
     margin: 0;
     padding: 0;
     flex-shrink: 0;
@@ -340,6 +375,9 @@
     }
   }
 
+  // ==========================================
+  // .cart-item__remove
+  // ==========================================
   &__remove {
     width: 24px;
     height: 24px;

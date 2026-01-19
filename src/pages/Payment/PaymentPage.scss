@@ -1,0 +1,848 @@
+@use '@assets/styles/variables' as *;
+@use '@assets/styles/mixins' as *;
+
+// ==========================================
+// 手機版 Header
+// ==========================================
+.payment-page-mobile {
+  &__header-bar {
+    display: none;
+    width: 100%;
+    height: 46px;
+    background-color: $color-peach;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    flex-shrink: 0;
+
+    @include breakpoint(md-max) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__header-btn {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0 30px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &--left {
+      margin: 0 30px;
+    }
+  }
+
+  &__header-title {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 22px; // 調整 status bar 的偏移
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    margin: 0;
+    padding: 0;
+    line-height: 48px;
+    white-space: nowrap;
+  }
+
+  &__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 30px;
+  }
+
+  &__header-action-btn {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+// ==========================================
+// 主頁面容器
+// ==========================================
+.payment-page {
+  background-color: $color-white;
+  padding-top: 60px;
+  margin-bottom: 202px;
+
+  @include breakpoint(md-max) {
+    padding-top: 0;
+    padding-bottom: 113px; // 為底部 footer 預留空間
+    margin-bottom: 0;
+  }
+
+  // ==========================================
+  // 頁面 Wrapper
+  // ==========================================
+  &__wrapper {
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+
+    @include breakpoint(lg-max) {
+      max-width: 100%;
+      flex-direction: column;
+      gap: 30px;
+      padding: 0 10px;
+    }
+
+    @include breakpoint(md-max) {
+      flex-direction: column;
+      gap: 0;
+      padding: 0;
+    }
+  }
+
+  // ==========================================
+  // 左側表單區域
+  // ==========================================
+  &__form-section {
+    flex: 1;
+    width: 100%;
+    max-width: 740px;
+
+    @include breakpoint(md-max) {
+      max-width: 100%;
+      padding: 30px 30px 60px 30px;
+    }
+  }
+
+  // ==========================================
+  // 區塊 (付款方式 / 運送方式)
+  // ==========================================
+  &__section {
+    &:last-child {
+      margin-bottom: 0;
+    }
+    @include breakpoint(md-max) {
+      // 關鍵寫法：選取同層級中的第 2 個 <div>
+      // 即使中間夾了 .payment-page__divider，它也會精確抓到「運送方式」
+      &:nth-of-type(2) {
+        margin-top: 30px;
+      }
+    }
+  }
+
+  &__section-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    margin: 0 0 20px 0;
+    padding: 0;
+    line-height: 20px;
+  }
+
+  // ==========================================
+  // 分隔線
+  // ==========================================
+  &__divider {
+    border-top: 0.5px solid $color-gray;
+    margin: 30px 0;
+
+    @include breakpoint(md-max) {
+      display: block;
+      height: 5px;
+      background-color: #f1f1f1;
+      margin: 30px -30px;
+    }
+  }
+
+  // ==========================================
+  // 選項 (Radio 選項)
+  // ==========================================
+  &__option {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+
+    &--expandable {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__radio-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &__radio-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .payment-page__radio-button {
+      border-color: $color-peach;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__radio-button {
+    position: absolute;
+    left: -25px;
+    top: 3px;
+    width: 15px;
+    height: 15px;
+    border: 1px solid $color-dark;
+    border-radius: 50%;
+    background-color: $color-white;
+    transition: all 0.3s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-52%, -52%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $color-peach;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+  }
+
+  &__option-label {
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    line-height: 20px;
+  }
+
+  &__option-note {
+    display: block;
+    font-size: 12px;
+    font-weight: $font-weight-medium;
+    color: $color-dark-50;
+    margin-top: 5px;
+    line-height: 20px;
+  }
+
+  // ==========================================
+  // 表單欄位區塊
+  // ==========================================
+  &__form-fields {
+    margin-top: 20px;
+    padding-left: 0;
+
+    @include breakpoint(md-max) {
+      margin-top: 25px;
+    }
+  }
+
+  &__form-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include breakpoint(md-max) {
+      flex-direction: row;
+      gap: 3px;
+    }
+
+    // 宅配到府：收件人姓名 + 手機號碼 同一行（桌面版）
+    &--shipping {
+      display: flex;
+      gap: 5px;
+
+      @include breakpoint(md-max) {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+
+    // 信用卡：卡片詳情 + 帳單地址 同一行（桌面版）
+    &--credit-card {
+      display: flex;
+      gap: 5px;
+
+      @include breakpoint(md-max) {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+
+    // 信用卡：到期日 + 安全驗證碼 + 郵遞區號 同一行（桌面版三欄）
+    &--credit-card-second {
+      display: flex;
+      gap: 3px;
+
+      @include breakpoint(md-max) {
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+    }
+  }
+
+  &__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    &--full {
+      flex: 1;
+      width: 100%;
+
+      @include breakpoint(md-max) {
+        max-width: 100%;
+      }
+    }
+
+    &--half {
+      flex: 1;
+      max-width: calc(50% - 2.5px);
+
+      @include breakpoint(md-max) {
+        flex: 1;
+        max-width: calc(50% - 1.5px);
+      }
+    }
+
+    &--quarter {
+      flex: 0 0 176px;
+      max-width: 176px;
+
+      @include breakpoint(md-max) {
+        flex: 1;
+        max-width: calc(50% - 1.5px);
+      }
+    }
+
+    // 宅配到府：收件人姓名（桌面版 355px）
+    &--shipping-name {
+      flex: 0 0 355px;
+      max-width: 355px;
+
+      @include breakpoint(md-max) {
+        flex: 1;
+        max-width: 100%;
+      }
+    }
+
+    // 宅配到府：手機號碼（桌面版 350px）
+    &--shipping-phone {
+      flex: 0 0 350px;
+      max-width: 350px;
+
+      @include breakpoint(md-max) {
+        flex: 1;
+        max-width: 100%;
+      }
+    }
+
+    // 信用卡：半寬欄位（桌面版 355px）
+    &--card-half {
+      flex: 0 0 355px;
+      max-width: 355px;
+
+      @include breakpoint(md-max) {
+        flex: 1;
+        max-width: 100%;
+      }
+    }
+  }
+
+  &__form-label {
+    font-size: 12px;
+    font-weight: $font-weight-medium;
+    color: $color-dark-50;
+    margin-bottom: 0;
+    line-height: 20px;
+  }
+
+  // ==========================================
+  // 輸入框
+  // ==========================================
+  &__input {
+    width: 100%;
+    height: 24px;
+    padding: 2px 5px;
+    border: 1px solid $color-dark-20;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    background-color: $color-white;
+    outline: none;
+    transition: border-color 0.3s ease;
+
+    &::placeholder {
+      color: $color-dark-50;
+    }
+
+    &:focus {
+      border-color: $color-peach;
+    }
+
+    &--phone {
+      flex: 1;
+    }
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &--with-icon {
+      .payment-page__input {
+        padding-right: 30px;
+      }
+    }
+  }
+
+  &__input-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  // ==========================================
+  // 電話輸入框
+  // ==========================================
+  &__phone-input {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    @include breakpoint(md-max) {
+      gap: 5px;
+    }
+  }
+
+  &__phone-country {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__select {
+    width: 52px;
+    height: 24px;
+    padding: 2px 5px;
+    border: 1px solid $color-dark-20;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: $font-weight-medium;
+    color: $color-dark-50;
+    background-color: $color-light-gray;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    padding-right: 20px;
+
+    &:focus {
+      border-color: $color-peach;
+    }
+  }
+
+  &__select-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  // ==========================================
+  // 右側總計區域 (桌面版)
+  // ==========================================
+  &__summary {
+    width: 200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    @include breakpoint(lg-max) {
+      width: 100%;
+      max-width: none;
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    @include breakpoint(md-max) {
+      display: none;
+    }
+  }
+
+  &__summary-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    margin: 0 0 20px 0;
+    padding: 0;
+    line-height: 20px;
+  }
+
+  // ==========================================
+  // 商品列表 (桌面版)
+  // ==========================================
+  &__summary-products {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 30px;
+  }
+
+  &__summary-product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  &__summary-product-image {
+    width: 80px;
+    height: 80px;
+    background-color: $color-gray;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__summary-product-price {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    text-align: right;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    flex: 1;
+  }
+
+  // ==========================================
+  // 費用明細 (桌面版)
+  // ==========================================
+  &__summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    line-height: 20px;
+  }
+
+  &__summary-label {
+    flex: 1;
+    text-align: left;
+  }
+
+  &__summary-value {
+    text-align: right;
+  }
+
+  &__summary-divider {
+    border-top: 0.5px solid $color-gray;
+    margin: 15px 0;
+  }
+
+  &__summary-total {
+    .payment-page__summary-value {
+      font-weight: $font-weight-bold;
+      color: $color-red;
+    }
+  }
+
+  // ==========================================
+  // 下一步按鈕 (桌面版)
+  // ==========================================
+  &__button {
+    background-color: $color-peach;
+    color: $color-white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 30px;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 20px;
+
+    &:hover {
+      background-color: #f07a4f;
+    }
+
+    &:active {
+      background-color: #e65a2f;
+    }
+  }
+
+  // ==========================================
+  // 手機版: 分隔線
+  // ==========================================
+  &__mobile-divider {
+    display: none;
+
+    @include breakpoint(md-max) {
+      display: block;
+      height: 5px;
+      background-color: $color-light-gray;
+      margin: 35px -30px 0 -30px;
+    }
+  }
+
+  // ==========================================
+  // 手機版: 訂單資訊區塊
+  // ==========================================
+  &__mobile-order-section {
+    display: none;
+
+    @include breakpoint(md-max) {
+      display: block;
+    }
+  }
+
+  &__mobile-order {
+    padding-top: 35px;
+  }
+
+  // ==========================================
+  // 手機版: 商品列表 (Carousel)
+  // ==========================================
+  &__mobile-products {
+    margin: 8px -30px 0 0;
+    padding-right: 30px;
+  }
+
+  &__mobile-carousel {
+    .swiper-slide {
+      width: 180px !important;
+    }
+  }
+
+  &__mobile-product {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__mobile-product-image {
+    width: 180px;
+    height: 180px;
+    background-color: $color-gray;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__mobile-product-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10px;
+  }
+
+  &__mobile-product-price {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  &__mobile-product-remove {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  // ==========================================
+  // 手機版: 費用明細
+  // ==========================================
+  &__mobile-summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+  }
+
+  &__mobile-summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    line-height: 20px;
+  }
+
+  &__mobile-summary-label {
+    flex: 1;
+    text-align: left;
+  }
+
+  &__mobile-summary-value {
+    text-align: right;
+  }
+
+  // ==========================================
+  // 手機版底部
+  // ==========================================
+  &__mobile-footer {
+    display: none;
+
+    @include breakpoint(md-max) {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 0;
+      padding: 30px;
+      background-color: $color-light-gray;
+      z-index: 100;
+      height: 113px;
+    }
+  }
+
+  &__mobile-footer-label {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-medium;
+    color: $color-dark;
+    line-height: 20px;
+  }
+
+  &__mobile-footer-value {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-medium;
+    color: $color-red;
+    line-height: 20px;
+    letter-spacing: -0.5px;
+    margin-left: 30px;
+  }
+
+  &__mobile-footer-button {
+    background-color: $color-peach;
+    color: $color-white;
+    border: none;
+    border-radius: 10px;
+    line-height: 20px;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    cursor: pointer;
+    padding: 15px 30px;
+    margin-left: auto;
+
+    &:hover {
+      background-color: #f07a4f;
+    }
+
+    &:active {
+      background-color: #e65a2f;
+    }
+  }
+}
+
+// ==========================================
+// 隱藏 Footer (手機版)
+// ==========================================
+@include breakpoint(md-max) {
+  .footer {
+    display: none;
+  }
+}

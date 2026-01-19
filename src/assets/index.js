@@ -44,6 +44,7 @@ import bellIcon from './icon/Bell.png';
 import settingsIcon from './icon/Settings.png';
 import addPlusCircleIcon from './icon/Add_Plus_Circle.png';
 import removeMminusCircleIcon from './icon/Remove_Minus_Circle.png';
+import circleCheckGreen from './icon/Circle_Check.png';
 // Images
 import defaultBanner from './images/default_banner.png';
 import defaultMobileBanner from './images/default_mobile_banner.png';
@@ -115,6 +116,7 @@ export const Images = {
   settingsIcon,
   addPlusCircleIcon,
   removeMminusCircleIcon,
+  circleCheckGreen,
 
   // Images
   defaultBanner,

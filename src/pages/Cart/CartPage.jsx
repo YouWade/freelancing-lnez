@@ -127,16 +127,38 @@ const CartPage = () => {
     }
   };
 
-  // 下一步 - 檢查登入狀態
-  const handleNextStep = () => {
-    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-    const user = localStorage.getItem('user') || sessionStorage.getItem('user');
-    
-    if (!token && !user) {
-      navigate('/login');
+  // 下一步 - 導向付款頁面
+  // TODO: 之後可以加入登入檢查
+  const handleNextStep = (isMobile = false) => {
+    // 根據裝置類型決定要傳遞的商品
+    // Desktop: 傳遞所有商品
+    // Mobile: 傳遞已選取的商品
+    let selectedItems;
+    if (isMobile) {
+      // 手機版：只傳遞已選取的商品
+      selectedItems = cartItems.filter(item => checkedItems[item.id]);
     } else {
-      navigate('/user');
+      // 桌面版：傳遞所有商品
+      selectedItems = cartItems;
     }
+
+    // 開發階段：直接導向付款頁面，並傳遞購物車資料
+    navigate('/payment', {
+      state: {
+        cartItems: selectedItems,
+        isMobile,
+        discount,
+      }
+    });
+
+    // 正式版本：檢查登入狀態
+    // const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    // const user = localStorage.getItem('user') || sessionStorage.getItem('user');
+    // if (!token && !user) {
+    //   navigate('/login');
+    // } else {
+    //   navigate('/payment', { state: { cartItems: selectedItems, isMobile, discount } });
+    // }
   };
 
   return (
@@ -209,7 +231,7 @@ const CartPage = () => {
                 <span className="cart-page__mobile-summary-label">全部</span>
                 <span className="cart-page__mobile-summary-value">${Math.max(0, selectedTotal)}</span>
               </div>
-              <button className="cart-page__mobile-button" onClick={handleNextStep}>
+              <button className="cart-page__mobile-button" onClick={() => handleNextStep(true)}>
                 下一步
               </button>
             </div>
@@ -228,7 +250,7 @@ const CartPage = () => {
                 <span className="cart-page__mobile-footer-label">全部</span>
                 <span className="cart-page__mobile-footer-value">${Math.max(0, selectedTotal)}</span>
               </div>
-              <button className="cart-page__mobile-footer-button" onClick={handleNextStep}>
+              <button className="cart-page__mobile-footer-button" onClick={() => handleNextStep(true)}>
                 下一步
               </button>
             </div>
@@ -257,7 +279,7 @@ const CartPage = () => {
               <span className="cart-page__summary-value">${total}</span>
             </div>
 
-            <button className="cart-page__button" onClick={handleNextStep}>
+            <button className="cart-page__button" onClick={() => handleNextStep(false)}>
               下一步
             </button>
           </div>
