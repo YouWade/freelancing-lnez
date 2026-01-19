@@ -1,4 +1,6 @@
-/* HomeLayout Block - SCSS with BEM */
+@use '@assets/styles/variables' as *;
+@use '@assets/styles/mixins' as *;
+
 .layout {
   min-height: 100vh;
   display: flex;
@@ -8,10 +10,9 @@
     flex: 1;
   }
 
-  // 針對用戶頁面，在手機版隱藏 Footer
   &--user {
     .footer {
-      @media (max-width: 1023px) {
+      @include breakpoint(lg-max) {
         display: none !important;
       }
     }

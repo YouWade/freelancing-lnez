@@ -30,10 +30,15 @@ const CartItem = ({ item, onQuantityChange, onRemove, isChecked, onCheckChange }
         <input 
           type="radio" 
           className="cart-item__radio-input" 
+          id={`cart-item-${item.id}`}
           checked={isChecked || false}
           onChange={handleCheckChange}
+          onClick={handleCheckChange}
           name={`cart-item-${item.id}`}
         />
+        <label htmlFor={`cart-item-${item.id}`} className="cart-item__radio-label">
+          <span className="cart-item__radio-button"></span>
+        </label>
       </div>
 
       <div className="cart-item__image">
@@ -41,49 +46,48 @@ const CartItem = ({ item, onQuantityChange, onRemove, isChecked, onCheckChange }
       </div>
 
       <div className="cart-item__info">
-        <div className="cart-item__name">{item.name}</div>
-        <div className="cart-item__specs">
-          <div className="cart-item__spec">
-            <span className="cart-item__spec-label">顏色</span>
-            <div
-              className="cart-item__color-block"
-              style={{ backgroundColor: item.color }}
-            ></div>
-          </div>
-          <div className="cart-item__spec">
-            <span className="cart-item__spec-label">尺寸</span>
-            <span className="cart-item__size-badge">{item.size}</span>
+        <div className="cart-item__info-content">
+          <div className="cart-item__name">{item.name}</div>
+          <div className="cart-item__specs">
+            <div className="cart-item__spec">
+              <span className="cart-item__spec-label">顏色</span>
+              <div
+                className="cart-item__color-block"
+                style={{ backgroundColor: item.color }}
+              ></div>
+            </div>
+            <div className="cart-item__spec">
+              <span className="cart-item__spec-label">尺寸</span>
+              <span className="cart-item__size-badge">{item.size}</span>
+            </div>
           </div>
         </div>
+        <div className="cart-item__info-price">${item.price}</div>
+        <div className="cart-item__quantity">
+          <button
+            className="cart-item__quantity-btn cart-item__quantity-btn--minus"
+            onClick={handleQuantityDecrease}
+            aria-label="Decrease quantity"
+          >
+            <img src={Images.removeMminusCircleIcon} alt="Minus" />
+          </button>
+          <input
+            type="number"
+            className="cart-item__quantity-input"
+            value={item.quantity}
+            onChange={handleQuantityInput}
+            min="1"
+          />
+          <button
+            className="cart-item__quantity-btn cart-item__quantity-btn--plus"
+            onClick={handleQuantityIncrease}
+            aria-label="Increase quantity"
+          >
+            <img src={Images.addPlusCircleIcon} alt="Plus" />
+          </button>
+        </div>
+        <div className="cart-item__total">${item.totalPrice}</div>
       </div>
-
-      <div className="cart-item__price">${item.price}</div>
-
-      <div className="cart-item__quantity">
-        <button
-          className="cart-item__quantity-btn cart-item__quantity-btn--minus"
-          onClick={handleQuantityDecrease}
-          aria-label="Decrease quantity"
-        >
-          <img src={Images.removeMminusCircleIcon} alt="Minus" />
-        </button>
-        <input
-          type="number"
-          className="cart-item__quantity-input"
-          value={item.quantity}
-          onChange={handleQuantityInput}
-          min="1"
-        />
-        <button
-          className="cart-item__quantity-btn cart-item__quantity-btn--plus"
-          onClick={handleQuantityIncrease}
-          aria-label="Increase quantity"
-        >
-          <img src={Images.addPlusCircleIcon} alt="Plus" />
-        </button>
-      </div>
-
-      <div className="cart-item__total">${item.totalPrice}</div>
 
       <button
         className="cart-item__remove"

@@ -1,4 +1,6 @@
-/* Error Block - SCSS with BEM */
+@use '@assets/styles/variables' as *;
+@use '@assets/styles/mixins' as *;
+
 .error {
   min-height: 100vh;
   display: flex;
@@ -27,7 +29,7 @@
     margin: 0 0 $spacing-md 0;
     line-height: 1;
 
-    @media (max-width: $breakpoint-sm) {
+    @include breakpoint(sm-max) {
       font-size: 4rem;
     }
   }
@@ -38,7 +40,7 @@
     color: $color-text-dark;
     margin: 0 0 $spacing-md 0;
 
-    @media (max-width: $breakpoint-sm) {
+    @include breakpoint(sm-max) {
       font-size: $font-size-2xl;
     }
   }

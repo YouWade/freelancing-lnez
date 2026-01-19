@@ -9,7 +9,7 @@ const CartPage = () => {
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
-      image: 'http://localhost:3845/assets/71641cfaf69b921d1c39cabaf7c005fa39d94ecf.png',
+      image: Images.productImage1,
       name: '女士短版襯衫',
       price: 590,
       quantity: 1,
@@ -19,7 +19,7 @@ const CartPage = () => {
     },
     {
       id: 2,
-      image: 'http://localhost:3845/assets/cc84cb1ab4c7c9fb9bb5f1c5ca6061caf531e91f.png',
+      image: Images.productImage2,
       name: '女士短版襯衫',
       price: 590,
       quantity: 1,
@@ -29,7 +29,7 @@ const CartPage = () => {
     },
     {
       id: 3,
-      image: 'http://localhost:3845/assets/c3d6aed7d73fab26a5f8ffb3b08c3b05ef01aa6d.png',
+      image: Images.productImage3,
       name: '女士短版襯衫',
       price: 590,
       quantity: 1,
@@ -39,7 +39,7 @@ const CartPage = () => {
     },
     {
       id: 4,
-      image: 'http://localhost:3845/assets/59dc5a81c8db7fce708ee699fb608fb86daa26e9.png',
+      image: Images.productImage4,
       name: '女士短版襯衫',
       price: 590,
       quantity: 1,
@@ -99,14 +99,31 @@ const CartPage = () => {
 
   // 全選/取消全選
   const handleSelectAll = (checked) => {
-    if (checked) {
+    if (allChecked) {
+      // 如果已全選，點擊時取消全選
+      setCheckedItems({});
+    } else {
+      // 如果未全選，點擊時全選
       const newCheckedItems = {};
       cartItems.forEach(item => {
         newCheckedItems[item.id] = true;
       });
       setCheckedItems(newCheckedItems);
-    } else {
+    }
+  };
+
+  // 处理摘要区域的 radio 切换
+  const handleSummaryRadioChange = () => {
+    if (allChecked) {
+      // 如果已经全选，点击则取消全选
       setCheckedItems({});
+    } else {
+      // 否则全选
+      const newCheckedItems = {};
+      cartItems.forEach(item => {
+        newCheckedItems[item.id] = true;
+      });
+      setCheckedItems(newCheckedItems);
     }
   };
 
@@ -185,7 +202,8 @@ const CartPage = () => {
                   <input 
                     type="radio" 
                     checked={allChecked}
-                    onChange={(e) => handleSelectAll(e.target.checked)}
+                    onChange={() => handleSelectAll()}
+                    onClick={() => handleSelectAll()}
                   />
                 </div>
                 <span className="cart-page__mobile-summary-label">全部</span>
@@ -203,7 +221,8 @@ const CartPage = () => {
                   <input 
                     type="radio" 
                     checked={allChecked}
-                    onChange={(e) => handleSelectAll(e.target.checked)}
+                    onChange={() => handleSelectAll()}
+                    onClick={() => handleSelectAll()}
                   />
                 </div>
                 <span className="cart-page__mobile-footer-label">全部</span>
