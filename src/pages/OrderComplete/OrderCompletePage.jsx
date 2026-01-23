@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Images } from '@assets';
+import MobileHeaderBar from '@components/common/MobileHeaderBar';
 import './OrderCompletePage.scss';
 
 const OrderCompletePage = () => {
@@ -12,32 +13,7 @@ const OrderCompletePage = () => {
   return (
     <>
       {/* 手機版 Header */}
-      <div className="order-complete-mobile__header-bar">
-        <button
-          className="order-complete-mobile__header-btn order-complete-mobile__header-btn--left"
-          onClick={() => navigate(-1)}
-          aria-label="返回"
-        >
-          <img src={Images.chevronLeftIcon} alt="" />
-        </button>
-
-        <h1 className="order-complete-mobile__header-title">訂單完成</h1>
-
-        <div className="order-complete-mobile__header-actions">
-          <button
-            className="order-complete-mobile__header-action-btn"
-            aria-label="幫助"
-          >
-            <img src={Images.circleHelpIcon} alt="" />
-          </button>
-          <button
-            className="order-complete-mobile__header-action-btn"
-            aria-label="用户"
-          >
-            <img src={Images.userIcon} alt="" />
-          </button>
-        </div>
-      </div>
+      <MobileHeaderBar title="訂單完成" />
 
       <div className="order-complete">
         <div className="order-complete__content">

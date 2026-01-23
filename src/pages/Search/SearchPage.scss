@@ -1,0 +1,443 @@
+.search-page {
+  background-color: #f1f1f1;
+  min-height: 100vh;
+
+  // 桌面版
+  @include breakpoint(md-min) {
+    padding: $spacing-2xl 0;
+  }
+
+  &__container {
+    display: flex;
+    max-width: 980px;
+    margin: 0 auto;
+    gap: 110px;
+
+    @include breakpoint(md-max) {
+      flex-direction: column;
+      padding: 0;
+      gap: 0;
+    }
+  }
+
+  &__filter {
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex-grow: 1;
+  }
+
+  &__products {
+    display: grid;
+    grid-template-columns: repeat(3, 240px);
+    gap: 10px 20px;
+
+    @include breakpoint(md-max) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      padding: 19px 30px;
+    }
+  }
+
+  // =====================
+  // 手機版搜尋列
+  // =====================
+  &__mobile-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: 0 21px;
+    height: 75px;
+    background-color: $color-white;
+
+    @include breakpoint(md-min) {
+      display: none;
+    }
+  }
+
+  &__back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__mobile-search-bar {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 45px;
+  }
+
+  &__mobile-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0 $spacing-md;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $color-text-dark;
+    outline: none;
+    height: 100%;
+    min-width: 0;
+
+    &::placeholder {
+      color: $color-gray;
+    }
+  }
+
+  &__mobile-camera-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0 $spacing-sm;
+    cursor: pointer;
+    height: 100%;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__mobile-search-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-peach;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    img {
+      width: 22px;
+      height: 22px;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  // =====================
+  // 手機版分類篩選列
+  // =====================
+  &__mobile-filters {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    height: 44px;
+    background-color: $color-white;
+    border-bottom: 1px solid $color-gray-200;
+
+    @include breakpoint(md-min) {
+      display: none;
+    }
+  }
+
+  &__mobile-filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $color-text-dark;
+
+    &--active {
+      color: $color-peach;
+    }
+  }
+
+  &__mobile-filter-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform $transition-fast;
+
+    &--rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  // =====================
+  // 手機版篩選遮罩
+  // =====================
+  &__mobile-filter-overlay {
+    position: fixed;
+    top: 119px; // 75px (header) + 44px (filter tabs)
+    left: 0;
+    width: 100%;
+    height: calc(100% - 119px);
+    background-color: $color-dark-50;
+    z-index: 998;
+    transition: opacity $transition-base;
+
+    @include breakpoint(md-min) {
+      display: none;
+    }
+  }
+
+  // =====================
+  // 手機版篩選下拉內容
+  // =====================
+  &__mobile-filter-dropdown {
+    position: fixed;
+    top: 119px; // 75px (header) + 44px (filter tabs)
+    left: 0;
+    width: 100%;
+    background-color: $color-white;
+    border-bottom: 1px solid $color-gray-200;
+    padding: $spacing-md 30px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 999;
+    box-shadow: $shadow-md;
+
+    @include breakpoint(md-min) {
+      display: none;
+    }
+  }
+
+  &__mobile-filter-content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__mobile-filter-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: $font-size-base;
+    color: $color-text-dark;
+  }
+
+  &__mobile-filter-radio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-right: $spacing-sm;
+
+    &-input {
+      visibility: hidden;
+      position: absolute;
+      margin: 0;
+      padding: 0;
+    }
+
+    &-button {
+      height: 20px;
+      width: 20px;
+      border: 2px solid #2C2C2C;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      background-color: $color-white;
+      transition: all 0.3s ease;
+
+      &::after {
+        content: "";
+        display: block;
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $color-peach;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+    }
+
+    &-input:checked ~ &-button {
+      border-color: $color-peach;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  // =====================
+  // 手機版價格滑桿
+  // =====================
+  &__mobile-price-slider {
+    position: relative;
+    width: 100%;
+    height: 13.5px;
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-md;
+  }
+
+  &__mobile-price-slider-track {
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__mobile-price-slider-range {
+    position: absolute;
+    height: 3px;
+    background-color: #34C759;
+    border-radius: 3px;
+    top: 0;
+  }
+
+  &__mobile-price-slider-input {
+    position: absolute;
+    width: 100%;
+    height: 13.5px;
+    top: 0;
+    left: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    pointer-events: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 13.5px;
+      height: 13.5px;
+      border-radius: 13.5px;
+      background-color: $color-white;
+      border: 1.5px solid #2C2C2C;
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      z-index: 3;
+    }
+
+    &::-moz-range-thumb {
+      width: 13.5px;
+      height: 13.5px;
+      border-radius: 13.5px;
+      background-color: $color-white;
+      border: 1.5px solid #2C2C2C;
+      cursor: pointer;
+      pointer-events: auto;
+      position: relative;
+      z-index: 3;
+    }
+
+    &--max {
+      z-index: 2;
+    }
+
+    &--min {
+      z-index: 3;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus::-webkit-slider-thumb {
+      box-shadow: 0 0 0 3px rgba($color-peach, 0.2);
+    }
+
+    &:focus::-moz-range-thumb {
+      box-shadow: 0 0 0 3px rgba($color-peach, 0.2);
+    }
+  }
+
+  &__mobile-price-range {
+    font-size: $font-size-base;
+    color: $color-gray;
+    text-align: center;
+  }
+
+  // =====================
+  // 加載動畫
+  // =====================
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-2xl 0;
+    gap: $spacing-md;
+
+    p {
+      font-size: $font-size-lg;
+      color: $color-gray;
+      margin: 0;
+    }
+  }
+
+  &__loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid $color-gray-200;
+    border-top-color: $color-peach;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  // =====================
+  // 無結果提示
+  // =====================
+  &__no-results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-3xl 0;
+
+    p {
+      font-size: $font-size-xl;
+      color: $color-gray;
+      margin: 0;
+    }
+  }
+
+  // =====================
+  // 結束訊息
+  // =====================
+  &__end-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-2xl 0;
+
+    p {
+      font-size: $font-size-base;
+      color: $color-gray;
+      margin: 0;
+    }
+  }
+}

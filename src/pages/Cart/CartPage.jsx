@@ -1,55 +1,29 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '@hooks/useCart';
 import { Images } from '@assets';
 import CartItem from '@components/Cart/CartItem';
+import MobileHeaderBar from '@components/common/MobileHeaderBar';
 import './CartPage.scss';
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      image: Images.productImage1,
-      name: '女士短版襯衫',
-      price: 590,
-      quantity: 1,
-      color: '#77d8d8',
-      size: 'S',
-      totalPrice: 590,
-    },
-    {
-      id: 2,
-      image: Images.productImage2,
-      name: '女士短版襯衫',
-      price: 590,
-      quantity: 1,
-      color: '#6877fd',
-      size: 'M',
-      totalPrice: 590,
-    },
-    {
-      id: 3,
-      image: Images.productImage3,
-      name: '女士短版襯衫',
-      price: 590,
-      quantity: 1,
-      color: '#a73e3e',
-      size: 'L',
-      totalPrice: 590,
-    },
-    {
-      id: 4,
-      image: Images.productImage4,
-      name: '女士短版襯衫',
-      price: 590,
-      quantity: 1,
-      color: '#49adad',
-      size: 'XL',
-      totalPrice: 590,
-    },
-  ]);
+
+  // 使用 CartContext
+  const { cartItems, updateCartItem, removeCartItem, getTotalPrice, loading } = useCart();
 
   const [checkedItems, setCheckedItems] = useState({});
+
+  // 初始化所有商品為選中狀態
+  useEffect(() => {
+    if (cartItems.length > 0 && Object.keys(checkedItems).length === 0) {
+      const initialChecked = {};
+      cartItems.forEach(item => {
+        initialChecked[item.id] = item.selected !== false; // 預設全選
+      });
+      setCheckedItems(initialChecked);
+    }
+  }, [cartItems, checkedItems]);
 
   // 計算小計（所有商品）
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -70,20 +44,14 @@ const CartPage = () => {
   const allChecked = cartItems.length > 0 && cartItems.every(item => checkedItems[item.id]);
 
   // 更新數量
-  const handleQuantityChange = (id, quantity) => {
+  const handleQuantityChange = async (id, quantity) => {
     if (quantity < 1) return;
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity, totalPrice: item.price * quantity }
-          : item
-      )
-    );
+    await updateCartItem(id, { quantity });
   };
 
   // 移除商品
-  const handleRemoveItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
+  const handleRemoveItem = async (id) => {
+    await removeCartItem(id);
     const newCheckedItems = { ...checkedItems };
     delete newCheckedItems[id];
     setCheckedItems(newCheckedItems);
@@ -164,34 +132,16 @@ const CartPage = () => {
   return (
     <>
       {/* 手機版 Header */}
-      <div className="cart-page-mobile__header-bar">
-        <button
-          className="cart-page-mobile__header-btn cart-page-mobile__header-btn--left"
-          onClick={() => navigate(-1)}
-          aria-label="返回"
-        >
-          <img src={Images.chevronLeftIcon} alt="" />
-        </button>
-
-        <h1 className="cart-page-mobile__header-title">購物車</h1>
-
-        <div className="cart-page-mobile__header-actions">
-          <button
-            className="cart-page-mobile__header-action-btn"
-            aria-label="幫助"
-          >
-            <img src={Images.circleHelpIcon} alt="" />
-          </button>
-          <button
-            className="cart-page-mobile__header-action-btn"
-            aria-label="用户"
-          >
-            <img src={Images.userIcon} alt="" />
-          </button>
-        </div>
-      </div>
+      <MobileHeaderBar title="購物車" />
 
       <div className="cart-page">
+        {loading && (
+          <div className="cart-page__loading">
+            <div className="cart-page__loading-spinner"></div>
+            <p>載入中...</p>
+          </div>
+        )}
+
         <div className="cart-page__wrapper">
           {/* 購物車商品列表 */}
           <div className="cart-page__content">
@@ -205,16 +155,28 @@ const CartPage = () => {
 
             {/* 商品列表 */}
             <div className="cart-page__list">
-              {cartItems.map((item) => (
-                <CartItem
-                  key={item.id}
-                  item={item}
-                  onQuantityChange={handleQuantityChange}
-                  onRemove={handleRemoveItem}
-                  isChecked={checkedItems[item.id]}
-                  onCheckChange={handleCheckChange}
-                />
-              ))}
+              {cartItems.length === 0 ? (
+                <div className="cart-page__empty">
+                  <p>購物車目前沒有商品</p>
+                  <button
+                    className="cart-page__empty-button"
+                    onClick={() => navigate('/')}
+                  >
+                    前往購物
+                  </button>
+                </div>
+              ) : (
+                cartItems.map((item) => (
+                  <CartItem
+                    key={item.id}
+                    item={item}
+                    onQuantityChange={handleQuantityChange}
+                    onRemove={handleRemoveItem}
+                    isChecked={checkedItems[item.id]}
+                    onCheckChange={handleCheckChange}
+                  />
+                ))
+              )}
             </div>
 
             {/* 手機版摘要 - 平板版使用 */}
@@ -240,12 +202,17 @@ const CartPage = () => {
             <div className="cart-page__mobile-footer-summary">
               <div className="cart-page__mobile-footer-item">
                 <div className="cart-page__mobile-footer-radio">
-                  <input 
-                    type="radio" 
+                  <input
+                    type="radio"
+                    id="footer-select-all"
+                    className="cart-page__mobile-footer-radio-input"
                     checked={allChecked}
                     onChange={() => handleSelectAll()}
                     onClick={() => handleSelectAll()}
                   />
+                  <label htmlFor="footer-select-all" className="cart-page__mobile-footer-radio-label">
+                    <span className="cart-page__mobile-footer-radio-button"></span>
+                  </label>
                 </div>
                 <span className="cart-page__mobile-footer-label">全部</span>
                 <span className="cart-page__mobile-footer-value">${Math.max(0, selectedTotal)}</span>

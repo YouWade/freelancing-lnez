@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import './Header.scss';
 import { Images } from '@assets';
 
@@ -18,14 +18,31 @@ const ORANGE_HEADER_PATHS = [
 const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState(0);
   const menuRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const buttonRef = useRef(null);
+  const searchInputRef = useRef(null);
+  const searchBarRef = useRef(null);
 
   // 判斷是否為橘色 Header 頁面
   const isOrangeHeader = ORANGE_HEADER_PATHS.includes(pathname);
+
+  // 判斷是否在搜尋頁面（搜尋列永久展開且不能收起）
+  const isSearchPage = pathname === '/search';
+
+  // 從 URL 讀取搜尋參數並更新狀態
+  useEffect(() => {
+    if (isSearchPage) {
+      const query = searchParams.get('q') || '';
+      setSearchQuery(query);
+      setIsSearchOpen(true);
+    }
+  }, [isSearchPage, searchParams]);
 
   // 動態設置 theme-color
   useEffect(() => {
@@ -66,7 +83,6 @@ const Header = () => {
       const isInsideDesktopMenu = menuRef.current?.contains(event.target);
       const isInsideMobileMenu = mobileMenuRef.current?.contains(event.target);
       const isInsideButton = buttonRef.current?.contains(event.target);
-      console.log(menuRef,mobileMenuRef);
 
       if (!isInsideDesktopMenu && !isInsideMobileMenu && !isInsideButton) {
         setIsMenuOpen(false);
@@ -94,8 +110,72 @@ const Header = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    // 關閉搜尋列當選單打開
+    if (!isMenuOpen) {
+      setIsSearchOpen(false);
+    }
   };
-  
+
+  // 處理搜尋圖標點擊
+  const handleSearchClick = () => {
+    if (isMobile) {
+      // 手機版：直接導航到搜尋頁面
+      navigate('/search');
+    } else {
+      // 桌面版：展開搜尋列
+      if (!isSearchPage) {
+        setIsSearchOpen(!isSearchOpen);
+        setIsMenuOpen(false);
+        // 展開後聚焦輸入框
+        if (!isSearchOpen) {
+          setTimeout(() => {
+            searchInputRef.current?.focus();
+          }, 300);
+        }
+      }
+    }
+  };
+
+  // 處理搜尋提交
+  const handleSearchSubmit = (e) => {
+    e?.preventDefault();
+    // 只有當有輸入內容時才提交
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      // 不在搜尋頁面時才關閉搜尋列
+      if (!isSearchPage) {
+        setIsSearchOpen(false);
+      }
+    }
+  };
+
+  // 處理搜尋輸入 Enter 鍵
+  const handleSearchKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchSubmit(e);
+    } else if (e.key === 'Escape' && !isSearchPage) {
+      setIsSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
+
+  // 點擊外部關閉搜尋列（搜尋頁面除外）
+  useEffect(() => {
+    const handleClickOutsideSearch = (event) => {
+      if (!isSearchOpen || isSearchPage) return;
+
+      const isInsideSearchBar = searchBarRef.current?.contains(event.target);
+      if (!isInsideSearchBar) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutsideSearch);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideSearch);
+    };
+  }, [isSearchOpen, isSearchPage]);
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -115,6 +195,7 @@ const Header = () => {
   const headerClasses = [
     'header',
     isMenuOpen ? 'header--menu-open' : '',
+    isSearchOpen ? 'header--search-open' : '',
     isOrangeHeader ? 'header--orange' : ''
   ].filter(Boolean).join(' ');
 
@@ -142,21 +223,54 @@ const Header = () => {
           <div className="header__logo-placeholder"></div>
         </div>
 
+        {/* 桌面版搜尋列 - 在中央位置 */}
+        <div
+          ref={searchBarRef}
+          className={`header__search-bar ${isSearchOpen ? 'header__search-bar--active' : ''}`}
+        >
+          <input
+            ref={searchInputRef}
+            type="text"
+            className="header__search-input"
+            placeholder="寬鬆西裝外套"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleSearchKeyDown}
+          />
+          <button
+            className="header__search-camera"
+            aria-label="Camera search"
+          >
+            <img src={Images.cameraIcon} alt="Camera" />
+          </button>
+          <button
+            className="header__search-submit"
+            onClick={handleSearchSubmit}
+            aria-label="Submit search"
+          >
+            <img src={Images.search} alt="Search" />
+          </button>
+        </div>
+
         <nav className="header__nav">
-          <button className="header__icon-btn" aria-label="Search">
+          <button
+            className="header__icon-btn header__icon-btn--search"
+            aria-label="Search"
+            onClick={handleSearchClick}
+          >
             <img src={useWhiteIcons ? Images.searchWhite : Images.search} alt="Search" />
           </button>
 
-          <button 
-            className="header__icon-btn" 
+          <button
+            className="header__icon-btn"
             aria-label="Shopping Cart"
             onClick={() => navigate('/cart')}
           >
             <img src={useWhiteIcons ? Images.shoppingCartWhite : Images.cart} alt="Shopping Cart" />
           </button>
 
-          <button 
-            className="header__icon-btn" 
+          <button
+            className="header__icon-btn"
             aria-label="User Account"
             onClick={() => navigate('/user')}
           >

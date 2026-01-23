@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Images } from '@assets';
 import { ORDERS_MOCK_DATA, ORDER_STATUS_FILTERS } from '@data';
 import Carousel from '@components/Carousel/Carousel';
+import MobileHeaderBar from '@components/common/MobileHeaderBar';
 import './UserOrderPage.scss';
 
 const ACTION_BUTTON_MAP = {
@@ -31,7 +32,7 @@ const UserOrderPage = () => {
 
 
   const handleActionClick = useCallback((action, orderId) => {
-    console.log(`Action: ${action}, Order: ${orderId}`);
+    // TODO: 處理訂單操作（付款、取消、評價、退款、確認收貨等）
   }, []);
 
   return (
@@ -39,24 +40,7 @@ const UserOrderPage = () => {
       {/* ==================== 手機版 ==================== */}
       <div className="user-order-page">
         {/* Header Bar - Mobile */}
-        <div className="user-order-page__header-bar">
-          <button
-            className="user-order-page__back-btn"
-            onClick={() => navigate('/user')}
-            aria-label="返回"
-          >
-            <img src={Images.chevronLeftIcon} alt="" />
-          </button>
-          <h1 className="user-order-page__header-title">訂單</h1>
-          <div className="user-order-page__header-icons">
-            <button className="user-order-page__header-icon-btn" aria-label="搜尋">
-              <img src={Images.searchWhite} alt="" />
-            </button>
-            <button className="user-order-page__header-icon-btn" aria-label="幫助">
-              <img src={Images.circleHelpIcon} alt="" />
-            </button>
-          </div>
-        </div>
+        <MobileHeaderBar title="訂單" backTo="/user" />
 
         {/* Status Filter Tabs - Mobile */}
         <div className="user-order-page__filter-bar">

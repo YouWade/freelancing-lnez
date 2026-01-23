@@ -8,3 +8,4 @@ export { default as UserOrderPage } from './User/UserOrderPage';
 export { default as CartPage } from './Cart/CartPage';
 export { default as PaymentPage } from './Payment/PaymentPage';
 export { default as OrderCompletePage } from './OrderComplete/OrderCompletePage';
+export { default as SearchPage } from './Search/SearchPage';

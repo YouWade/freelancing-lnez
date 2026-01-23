@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Images } from '@assets';
 import Carousel from '@components/Carousel/Carousel';
+import MobileHeaderBar from '@components/common/MobileHeaderBar';
 import './PaymentPage.scss';
 
 const PaymentPage = () => {
@@ -84,50 +85,25 @@ const PaymentPage = () => {
 
   // 移除商品（手機版用）
   const handleRemoveItem = (id) => {
-    // 這裡只是前端移除，實際應該更新 state 或 context
-    console.log('Remove item:', id);
+    // TODO: 整合 CartContext 移除商品
   };
 
   // 下一步處理
   const handleNextStep = () => {
     // TODO: 驗證表單並提交訂單
-    console.log('Payment Method:', paymentMethod);
-    console.log('Credit Card Form:', creditCardForm);
-    console.log('Shipping Method:', shippingMethod);
-    console.log('Shipping Form:', shippingForm);
-    console.log('Cart Items:', cartItems);
+    // 需要驗證：
+    // - paymentMethod 已選擇
+    // - 如果是信用卡，creditCardForm 完整
+    // - shippingMethod 已選擇
+    // - shippingForm 完整
+    // - cartItems 不為空
     // navigate('/order-confirmation');
   };
 
   return (
     <>
       {/* 手機版 Header */}
-      <div className="payment-page-mobile__header-bar">
-        <button
-          className="payment-page-mobile__header-btn payment-page-mobile__header-btn--left"
-          onClick={() => navigate(-1)}
-          aria-label="返回"
-        >
-          <img src={Images.chevronLeftIcon} alt="" />
-        </button>
-
-        <h1 className="payment-page-mobile__header-title">付款與運送</h1>
-
-        <div className="payment-page-mobile__header-actions">
-          <button
-            className="payment-page-mobile__header-action-btn"
-            aria-label="幫助"
-          >
-            <img src={Images.circleHelpIcon} alt="" />
-          </button>
-          <button
-            className="payment-page-mobile__header-action-btn"
-            aria-label="用户"
-          >
-            <img src={Images.userIcon} alt="" />
-          </button>
-        </div>
-      </div>
+      <MobileHeaderBar title="付款與運送" />
 
       <div className="payment-page">
         <div className="payment-page__wrapper">

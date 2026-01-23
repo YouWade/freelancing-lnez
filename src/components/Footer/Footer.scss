@@ -1,7 +1,11 @@
+@use '@assets/styles/variables' as *;
+@use '@assets/styles/mixins' as *;
+
 .footer {
   background-color: $color-peach;
   color: $color-white;
   padding: 74px 150px 56px 150px;
+  width: 100%;
 
   @include breakpoint(md-max) {
     padding: 45px $spacing-md;

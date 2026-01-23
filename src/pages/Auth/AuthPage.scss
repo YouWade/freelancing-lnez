@@ -471,9 +471,12 @@
 
     .auth-page__options {
       justify-content: flex-start;
-
+      justify-content: space-between;
       @include breakpoint(lg-max) {
         margin-bottom: 96px;
+        .auth-page__forgot-link {
+          display: none;
+        }
       }
     }
 

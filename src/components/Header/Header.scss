@@ -1,3 +1,7 @@
+@use "sass:color";
+@use '@assets/styles/variables' as *;
+@use '@assets/styles/mixins' as *;
+
 .header {
   background-color: $color-white;
   border-bottom: 1px solid $color-gray-200;
@@ -85,13 +89,14 @@
   }
 
   &__container {
-    max-width: 980px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: $spacing-md 0;
+    padding: $spacing-md 150px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
+    height: 80px;
 
     @include breakpoint(md-max) {
       padding: 15px 30px 30px 30px;
@@ -116,9 +121,21 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    transition: left $transition-base, transform $transition-base;
+
     @include breakpoint(md-max) {
       top: 15px;
-      transform: translate(-50%, 0);
+      transform: translateX(-50%);
+    }
+  }
+
+  // 搜尋列展開時，Logo 移到左側
+  &--search-open {
+    .header__logo {
+      @include breakpoint(md-min) {
+        left: 260px;
+        transform: translateY(-50%);
+      }
     }
   }
 
@@ -155,6 +172,111 @@
 
     &:hover {
       color: $color-peach;
+    }
+
+    // 桌面版：搜尋列展開時隱藏搜尋圖標
+    &--search {
+      @include breakpoint(md-min) {
+        transition: opacity $transition-fast, visibility $transition-fast;
+      }
+    }
+  }
+
+  // 搜尋列展開時，隱藏搜尋按鈕（桌面版）
+  &--search-open {
+    .header__icon-btn--search {
+      @include breakpoint(md-min) {
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  // 桌面版搜尋列 - 在中央位置
+  &__search-bar {
+    display: none;
+
+    @include breakpoint(md-min) {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      background-color: #f1f1f1;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: width 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+      height: 45px;
+
+      &--active {
+        width: 500px;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0 $spacing-md;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-medium;
+    color: $color-text-dark;
+    outline: none;
+    text-align: left;
+    min-width: 0;
+
+    &::placeholder {
+      color: $color-text-dark;
+    }
+  }
+
+  &__search-camera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0 $spacing-sm;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__search-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-peach;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: color.adjust($color-peach, $lightness: -5%);
+    }
+
+    img {
+      width: 22px;
+      height: 22px;
+      filter: brightness(0) invert(1);
     }
   }
 

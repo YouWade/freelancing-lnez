@@ -442,6 +442,26 @@
     overflow: hidden;
   }
 
+  &__carousel {
+    width: 100%;
+    height: 80px;
+
+    :global(.swiper) {
+      overflow: visible;
+    }
+
+    :global(.swiper-wrapper) {
+      display: flex;
+      align-items: center;
+    }
+
+    :global(.swiper-slide) {
+      width: 80px !important;
+      height: 80px !important;
+      flex-shrink: 0;
+    }
+  }
+
   &__products-wrapper {
     display: flex;
     gap: 3px;

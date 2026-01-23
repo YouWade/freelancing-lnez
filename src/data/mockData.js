@@ -125,12 +125,14 @@ export const ORDERS_MOCK_DATA = [
   },
 ];
 
-export const PRODUCTS_MOCK_DATA = Array(16).fill(null).map((_, index) => ({
-  id: index + 1,
-  title: '女士短版襯衫',
-  price: '$590',
-  image: Images[`productImage${(index % 10) + 1}`] || Images.productDefault,
-}));
+// DEPRECATED: 已改用 PRODUCTS_DATA (src/data/products.js)
+// 此資料已不再使用，保留僅供參考
+// export const PRODUCTS_MOCK_DATA = Array(16).fill(null).map((_, index) => ({
+//   id: index + 1,
+//   title: '女士短版襯衫',
+//   price: '$590',
+//   image: Images[`productImage${(index % 10) + 1}`] || Images.productDefault,
+// }));
 
 export const MY_ORDER_MENU = [
   { key: 'pending_payment', label: '待付款', icon: 'creditCard' },

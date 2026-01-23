@@ -1,5 +1,6 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@hooks/useAuth';
 import './AuthPage.scss';
 import { Images } from '@assets';
 
@@ -11,7 +12,7 @@ const PAGE_CONTENT = {
     submitBtn: '登入',
     showRememberMe: true,
     showForgotPassword: true,
-    forgotPasswordPosition: 'bottom',
+    forgotPasswordPosition: 'inline',
     showSocialLogin: true,
     socialText: null,
     footerLink: { text: '忘記密碼？', path: '/forgot-password' },
@@ -74,62 +75,27 @@ const INITIAL_FORM_STATE = {
 };
 
 // ========================================
-// API Functions (待串接 - 移到組件外)
-// ========================================
-
-/**
- * 登入 API
- * @param {Object} data - { account, password, rememberMe }
- */
-const loginApi = async (data) => {
-  // TODO: 串接登入 API
-  console.log('Login API called:', data);
-  // Example:
-  // const response = await authService.login(data);
-  // return response;
-};
-
-/**
- * 註冊 API
- * @param {Object} data - { name, account, password }
- */
-const registerApi = async (data) => {
-  // TODO: 串接註冊 API
-  console.log('Register API called:', data);
-  // Example:
-  // const response = await authService.register(data);
-  // return response;
-};
-
-/**
- * Google SSO 登入
- */
-const googleLoginApi = async () => {
-  // TODO: 串接 Google OAuth
-  console.log('Google SSO login initiated');
-  // Example:
-  // window.location.href = authService.getGoogleAuthUrl();
-};
-
-/**
- * Apple SSO 登入
- */
-const appleLoginApi = async () => {
-  // TODO: 串接 Apple Sign In
-  console.log('Apple SSO login initiated');
-  // Example:
-  // window.location.href = authService.getAppleAuthUrl();
-};
-
-// ========================================
 // Component
 // ========================================
 
 const AuthPage = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  // 使用 AuthContext
+  const { login, register, googleLogin, appleLogin, isAuthenticated, loading } = useAuth();
+
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // 如果已登入，重定向到首頁
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   // 使用 useMemo 避免每次 render 重新計算
   const currentPage = useMemo(
@@ -156,23 +122,44 @@ const AuthPage = () => {
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
+    setError('');
+    setIsSubmitting(true);
 
-    const pageClass = currentPage.class;
+    try {
+      const pageClass = currentPage.class;
 
-    if (pageClass === 'login' || pageClass === 'sso-login') {
-      await loginApi({
-        account: formData.account,
-        password: formData.password,
-        rememberMe: formData.rememberMe
-      });
-    } else if (pageClass === 'register') {
-      await registerApi({
-        name: formData.name,
-        account: formData.account,
-        password: formData.password
-      });
+      if (pageClass === 'login' || pageClass === 'sso-login') {
+        const result = await login({
+          email: formData.account,
+          password: formData.password,
+          rememberMe: formData.rememberMe
+        });
+
+        if (result.success) {
+          navigate('/');
+        } else {
+          setError(result.error || '登入失敗，請檢查帳號密碼');
+        }
+      } else if (pageClass === 'register') {
+        const result = await register({
+          name: formData.name,
+          email: formData.account,
+          password: formData.password
+        });
+
+        if (result.success) {
+          navigate('/');
+        } else {
+          setError(result.error || '註冊失敗，請稍後再試');
+        }
+      }
+    } catch (err) {
+      setError('發生錯誤，請稍後再試');
+      console.error('Auth error:', err);
+    } finally {
+      setIsSubmitting(false);
     }
-  }, [currentPage.class, formData]);
+  }, [currentPage.class, formData, login, register, navigate]);
 
   // 渲染單一欄位
   const renderField = useCallback((fieldName) => {
@@ -248,6 +235,13 @@ const AuthPage = () => {
         {/* 右側：表單區 */}
         <div className="auth-page__content">
           <form className="auth-page__form" onSubmit={handleSubmit}>
+            {/* 錯誤訊息 */}
+            {error && (
+              <div className="auth-page__error">
+                {error}
+              </div>
+            )}
+
             {/* 動態渲染欄位 */}
             {currentPage.fields.map(renderField)}
 
@@ -275,8 +269,12 @@ const AuthPage = () => {
             )}
 
             {/* 提交按鈕 */}
-            <button type="submit" className="auth-page__submit-btn">
-              {currentPage.submitBtn}
+            <button
+              type="submit"
+              className="auth-page__submit-btn"
+              disabled={loading || isSubmitting}
+            >
+              {isSubmitting ? '處理中...' : currentPage.submitBtn}
             </button>
 
             {/* 社交登入區 */}
@@ -292,14 +290,42 @@ const AuthPage = () => {
                   <button
                     type="button"
                     className="auth-page__social-btn auth-page__social-btn--google"
-                    onClick={googleLoginApi}
+                    onClick={async () => {
+                      try {
+                        setError('');
+                        const result = await googleLogin('mock-google-token');
+                        if (result.success) {
+                          navigate('/');
+                        } else {
+                          setError(result.error || 'Google 登入失敗');
+                        }
+                      } catch (err) {
+                        setError('Google 登入發生錯誤');
+                        console.error('Google login error:', err);
+                      }
+                    }}
+                    disabled={loading || isSubmitting}
                   >
                     使用Google帳號登入
                   </button>
                   <button
                     type="button"
                     className="auth-page__social-btn auth-page__social-btn--apple"
-                    onClick={appleLoginApi}
+                    onClick={async () => {
+                      try {
+                        setError('');
+                        const result = await appleLogin('mock-apple-token');
+                        if (result.success) {
+                          navigate('/');
+                        } else {
+                          setError(result.error || 'Apple 登入失敗');
+                        }
+                      } catch (err) {
+                        setError('Apple 登入發生錯誤');
+                        console.error('Apple login error:', err);
+                      }
+                    }}
+                    disabled={loading || isSubmitting}
                   >
                     使用Apple帳號登入
                   </button>
@@ -312,11 +338,6 @@ const AuthPage = () => {
 
             {/* 底部連結 */}
             <div className={`auth-page__footer--${currentPage.class}`}>
-              {currentPage.showForgotPassword && currentPage.forgotPasswordPosition === 'bottom' && (
-                <Link to="/forgot-password" className="auth-page__footer-link">
-                  忘記密碼？
-                </Link>
-              )}
               {currentPage.footerLink && (
                 <Link to={currentPage.footerLink.path} className="auth-page__footer-link">
                   {currentPage.footerLink.text}

@@ -1,3 +1,6 @@
+@use '@assets/styles/variables' as *;
+@use '@assets/styles/mixins' as *;
+
 /* Product Card Block - SCSS with BEM */
 .product-card {
   background-color: $color-white;

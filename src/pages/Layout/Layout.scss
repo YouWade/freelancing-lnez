@@ -17,4 +17,12 @@
       }
     }
   }
+
+  &--hide-mobile-header {
+    .header {
+      @include breakpoint(md-max) {
+        display: none;
+      }
+    }
+  }
 }

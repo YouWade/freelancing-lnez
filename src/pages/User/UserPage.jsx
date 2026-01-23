@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Images } from '@assets';
 import Carousel from '@components/Carousel/Carousel';
+import MobileHeaderBar from '@components/common/MobileHeaderBar';
 import {
   USER_MOCK_DATA,
   MY_ORDER_MENU,
@@ -78,7 +79,7 @@ const UserPage = () => {
   const [activeTool, setActiveTool] = useState(null);
 
   const handleMenuItemClick = useCallback((key) => {
-    console.log(`Clicked: ${key}`);
+    // TODO: 處理選單項目點擊
   }, []);
 
   const handleOrderStatusClick = useCallback((key) => {
@@ -90,7 +91,7 @@ const UserPage = () => {
   }, []);
 
   const handleActionClick = useCallback((action, orderId) => {
-    console.log(`Action: ${action}, Order: ${orderId}`);
+    // TODO: 處理訂單操作（評價、退款、確認收貨等）
   }, []);
 
   return (
@@ -98,38 +99,7 @@ const UserPage = () => {
       {/* ==================== 手機版 ==================== */}
       <div className="user-page-mobile">
         {/* 上方 Header Bar */}
-        <div className="user-page-mobile__header-bar">
-          <button
-            className="user-page-mobile__header-btn user-page-mobile__header-btn--left"
-            onClick={() => navigate('/')}
-            aria-label="返回"
-          >
-            <img src={Images.chevronLeftIcon} alt="" />
-          </button>
-
-          <h1 className="user-page-mobile__header-title">會員</h1>
-
-          <div className="user-page-mobile__header-actions">
-            <button
-              className="user-page-mobile__header-action-btn"
-              aria-label="幫助"
-            >
-              <img src={Images.circleHelpIcon} alt="" />
-            </button>
-            <button
-              className="user-page-mobile__header-action-btn"
-              aria-label="通知"
-            >
-              <img src={Images.bellIcon} alt="" />
-            </button>
-            <button
-              className="user-page-mobile__header-action-btn"
-              aria-label="設定"
-            >
-              <img src={Images.settingsIcon} alt="" />
-            </button>
-          </div>
-        </div>
+        <MobileHeaderBar title="會員" backTo="/" isUserPage={true} />
 
         {/* 會員資訊區塊 */}
         <div className="user-page-mobile__member-section">

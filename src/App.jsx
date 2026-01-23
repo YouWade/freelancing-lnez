@@ -1,5 +1,18 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Layout, HomePage, ErrorPage, AuthPage, UserPage, UserOrderPage, CartPage, PaymentPage, OrderCompletePage } from './pages';
+import { AppProvider } from '@context/AppContext';
+import {
+  Layout,
+  HomePage,
+  ErrorPage,
+  AuthPage,
+  UserPage,
+  UserOrderPage,
+  CartPage,
+  PaymentPage,
+  OrderCompletePage,
+  SearchPage
+} from './pages';
+
 import './App.scss';
 
 const router = createBrowserRouter([
@@ -50,12 +63,21 @@ const router = createBrowserRouter([
         path: 'user/orders',
         element: <UserOrderPage />,
       },
+      // Search Page
+      {
+        path: 'search',
+        element: <SearchPage />,
+      },
     ],
   },
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <AppProvider>
+      <RouterProvider router={router} />
+    </AppProvider>
+  );
 };
 
 export default App;
