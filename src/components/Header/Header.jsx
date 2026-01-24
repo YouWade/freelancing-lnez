@@ -122,8 +122,9 @@ const Header = () => {
       // 手機版：直接導航到搜尋頁面
       navigate('/search');
     } else {
-      // 桌面版：展開搜尋列
-      if (!isSearchPage) {
+      // 桌面版
+      // 即便是 Search Page，如果目前是關閉的，也要能展開
+      if (!isSearchPage || (isSearchPage && !isSearchOpen)) {
         setIsSearchOpen(!isSearchOpen);
         setIsMenuOpen(false);
         // 展開後聚焦輸入框
@@ -234,7 +235,11 @@ const Header = () => {
           )}
         </button>
 
-        <div className="header__logo">
+        <div
+          className="header__logo"
+          onClick={() => navigate('/')}
+          style={{ cursor: 'pointer' }}
+        >
           <div className="header__logo-placeholder"></div>
         </div>
 
