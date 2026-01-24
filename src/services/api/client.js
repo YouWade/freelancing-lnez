@@ -1,10 +1,9 @@
 import axios from 'axios';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+import { CONFIG } from '@constants/config';
 
 const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 10000,
+  baseURL: CONFIG.API_BASE_URL,
+  timeout: CONFIG.API_TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -22,16 +21,55 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+/**
+ * 清理認證相關的 storage
+ */
+const clearAuthStorage = () => {
+  const storageKeys = ['token', 'user'];
+  storageKeys.forEach(key => {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+  });
+};
+
+/**
+ * 觸發登出事件
+ * 使用自定義事件通知應用程式需要登出
+ */
+const triggerLogout = () => {
+  clearAuthStorage();
+  window.dispatchEvent(new CustomEvent('auth:logout'));
+};
+
 // Response interceptor - 統一錯誤處理
 apiClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    if (error.response?.status === 401) {
-      // Token 過期，清除並跳轉登入
-      localStorage.removeItem('token');
-      sessionStorage.removeItem('token');
-      window.location.href = '/login';
+    const status = error.response?.status;
+
+    switch (status) {
+      case 401:
+        // Token 過期或未授權
+        triggerLogout();
+        break;
+      case 403:
+        // 權限不足
+        console.warn('權限不足,無法訪問此資源');
+        break;
+      case 404:
+        // 資源不存在
+        console.warn('請求的資源不存在');
+        break;
+      case 500:
+      case 502:
+      case 503:
+        // 伺服器錯誤
+        console.error('伺服器錯誤,請稍後再試');
+        break;
+      default:
+        console.error('請求失敗:', error.message);
     }
+
     return Promise.reject(error);
   }
 );

@@ -1,7 +1,9 @@
 import { createContext, useState, useEffect } from 'react';
 import { cartApi } from '@services/api/cart.api';
 import { STORAGE_KEYS } from '@constants/storageKeys';
-import { CART_MOCK_DATA } from '@data';
+import { mockService } from '@services/mockService';
+import { useDebounce } from '@utils/debounce';
+import { isSameCartItem } from '@utils/cartUtils';
 
 export const CartContext = createContext(null);
 
@@ -24,15 +26,25 @@ export const CartProvider = ({ children }) => {
       // const response = await cartApi.getCart();
       // setCartItems(response.data);
 
-      // 開發階段：使用 mock data
-      setCartItems(CART_MOCK_DATA);
+      // 使用 Mock Service 獲取資料
+      const mockData = mockService.getCartData();
+      if (mockData) {
+        setCartItems(mockData);
+      }
     }
   }, []);
 
-  // 購物車變更時儲存到 localStorage
+  // 使用 debounce 優化 localStorage 寫入
+  const debouncedSaveToStorage = useDebounce((items) => {
+    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(items));
+  }, 500);
+
+  // 購物車變更時儲存到 localStorage (使用 debounce)
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cartItems));
-  }, [cartItems]);
+    if (cartItems.length >= 0) {
+      debouncedSaveToStorage(cartItems);
+    }
+  }, [cartItems, debouncedSaveToStorage]);
 
   // 新增商品到購物車
   const addToCart = async (item) => {
@@ -42,12 +54,9 @@ export const CartProvider = ({ children }) => {
       // TODO: 當 API 準備好時，使用 cartApi.addToCart(item)
       // const response = await cartApi.addToCart(item);
 
-      // 檢查購物車中是否已有相同商品（相同 id, color, size）
-      const existingItemIndex = cartItems.findIndex(
-        (cartItem) =>
-          cartItem.id === item.id &&
-          cartItem.color === item.color &&
-          cartItem.size === item.size
+      // 檢查購物車中是否已有相同商品(使用工具函數)
+      const existingItemIndex = cartItems.findIndex((cartItem) =>
+        isSameCartItem(cartItem, item)
       );
 
       if (existingItemIndex > -1) {

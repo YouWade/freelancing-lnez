@@ -16,6 +16,7 @@ export default defineConfig({
       '@hooks': fileURLToPath(new URL('./src/hooks', import.meta.url)),
       '@context': fileURLToPath(new URL('./src/context', import.meta.url)),
       '@constants': fileURLToPath(new URL('./src/constants', import.meta.url)),
+      '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
     },
   },
   css: {

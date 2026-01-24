@@ -30,7 +30,9 @@
 
   &__products {
     display: grid;
-    grid-template-columns: repeat(3, 240px);
+    // 使用 210px 作為最小寬度,可在 980px 容器(扣除 Gap 和 Filter)中容納 3 列
+    // 當空間不足時會自動變成 2 列或 1 列
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 10px 20px;
 
     @include breakpoint(md-max) {
@@ -273,7 +275,7 @@
       }
     }
 
-    &-input:checked ~ &-button {
+    &-input:checked~&-button {
       border-color: $color-peach;
 
       &::after {

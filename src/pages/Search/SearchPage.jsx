@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Filter from '@components/Filter/Filter';
 import ProductCard from '@components/ProductCard/ProductCard';
@@ -17,7 +17,7 @@ const SearchPage = () => {
   const [activeMobileFilter, setActiveMobileFilter] = useState(null);
 
   // 響應式偵測
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   // 篩選狀態
   const [selectedFilters, setSelectedFilters] = useState({
@@ -35,15 +35,31 @@ const SearchPage = () => {
   const productsPerPage = 12;
   const [hasMore, setHasMore] = useState(true);
 
+  // 使用 useCallback 和 debounce 優化 resize 處理
   useEffect(() => {
+    let timeoutId;
+
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const newIsMobile = window.innerWidth < 768;
+      // 只在實際改變時更新 state
+      setIsMobile(prev => prev !== newIsMobile ? newIsMobile : prev);
     };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    const debouncedCheckMobile = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkMobile, 150); // 150ms debounce
+    };
 
-    return () => window.removeEventListener('resize', checkMobile);
+    // 初始檢查
+    checkMobile();
+
+    // 添加 debounced resize listener
+    window.addEventListener('resize', debouncedCheckMobile);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', debouncedCheckMobile);
+    };
   }, []);
 
   // 處理搜尋提交
@@ -432,6 +448,7 @@ const SearchPage = () => {
                     title={product.name}
                     price={`$${product.price}`}
                     image={product.image}
+                    badge={product.isBestSeller ? '最暢銷' : null}
                   />
                 ))}
               </div>

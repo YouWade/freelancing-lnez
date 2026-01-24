@@ -176,17 +176,32 @@ const Header = () => {
     };
   }, [isSearchOpen, isSearchPage]);
 
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
+    let timeoutId;
+
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768); // 與 SCSS md-min 768px 一致
+      const newIsMobile = window.innerWidth < 768;
+      // 只在實際改變時更新 state,避免不必要的重新渲染
+      setIsMobile(prev => prev !== newIsMobile ? newIsMobile : prev);
     };
-    
+
+    const debouncedCheckMobile = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkMobile, 150); // 150ms debounce
+    };
+
+    // 初始檢查
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+
+    // 添加 debounced resize listener
+    window.addEventListener('resize', debouncedCheckMobile);
+
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', debouncedCheckMobile);
+    };
   }, []);
 
   const useWhiteIcons = isOrangeHeader || (isMenuOpen && !isMobile);
@@ -210,11 +225,11 @@ const Header = () => {
         >
           {isMenuOpen ? (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="header__menu-icon header__menu-icon--close">
-              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           ) : (
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="header__menu-icon">
-              <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           )}
         </button>

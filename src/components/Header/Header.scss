@@ -17,6 +17,7 @@
 
     .header__menu-btn {
       color: $color-white;
+
       &:hover {
         color: rgba($color-white, 0.8);
       }
@@ -24,6 +25,7 @@
 
     .header__icon-btn {
       color: $color-white;
+
       &:hover {
         color: rgba($color-white, 0.8);
       }
@@ -40,8 +42,9 @@
 
       .header__menu-btn {
         color: $color-text-dark !important;
-        
-        svg, path {
+
+        svg,
+        path {
           stroke: $color-text-dark !important;
         }
       }
@@ -58,6 +61,7 @@
 
   // 橘色 Header 樣式（登入、註冊、SSO登入、會員中心）
   &--orange {
+
     // 桌面版：橘色背景、白色 icon/logo
     @include breakpoint(md-min) {
       background-color: $color-peach;
@@ -65,6 +69,7 @@
 
       .header__menu-btn {
         color: $color-white;
+
         &:hover {
           color: rgba($color-white, 0.8);
         }
@@ -72,6 +77,7 @@
 
       .header__icon-btn {
         color: $color-white;
+
         &:hover {
           color: rgba($color-white, 0.8);
         }
@@ -97,6 +103,12 @@
     justify-content: space-between;
     position: relative;
     height: 80px;
+
+    // 平板尺寸 (1024px 以下) 使用手機版 padding
+    @include breakpoint(lg-max) {
+      padding: 15px 30px 30px 30px;
+      height: 75px;
+    }
 
     @include breakpoint(md-max) {
       padding: 15px 30px 30px 30px;
@@ -136,6 +148,12 @@
         left: 260px;
         transform: translateY(-50%);
       }
+
+      // 平板尺寸 (768px - 1024px)
+      @media (min-width: 768px) and (max-width: 1024px) {
+        left: 100px;
+        transform: translateY(-50%);
+      }
     }
   }
 
@@ -144,6 +162,7 @@
     height: 50px;
     background-color: $color-peach;
     border-radius: $radius-sm;
+
     @include breakpoint(md-max) {
       width: 60px;
       height: 30px;
@@ -216,7 +235,8 @@
       height: 45px;
 
       &--active {
-        width: 500px;
+        width: min(500px, calc(100vw - 400px)); // 響應式寬度,最大 500px,最小保留左右各 200px 空間
+        max-width: 500px;
         opacity: 1;
         visibility: visible;
       }
