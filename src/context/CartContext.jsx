@@ -14,19 +14,27 @@ export const CartProvider = ({ children }) => {
   // 初始化：從 localStorage 讀取購物車
   useEffect(() => {
     const savedCart = localStorage.getItem(STORAGE_KEYS.CART);
+    let loadedFromStorage = false;
+
     if (savedCart) {
       try {
         const parsedCart = JSON.parse(savedCart);
-        setCartItems(parsedCart);
+        if (Array.isArray(parsedCart) && parsedCart.length > 0) {
+          setCartItems(parsedCart);
+          loadedFromStorage = true;
+        }
       } catch (error) {
         console.error('Failed to parse cart from localStorage:', error);
       }
-    } else {
+    }
+
+    if (!loadedFromStorage) {
       // TODO: 當 API 準備好時，從 API 獲取購物車資料
       // const response = await cartApi.getCart();
       // setCartItems(response.data);
 
       // 使用 Mock Service 獲取資料
+      // 強制載入 Mock Data，即時 localStorage 為空也載入，為了演示目的
       const mockData = mockService.getCartData();
       if (mockData) {
         setCartItems(mockData);
