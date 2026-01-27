@@ -111,8 +111,9 @@
   padding: 60px 20px;
 
   @include breakpoint(md-max) {
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 46px);
     padding: 40px 20px;
+    padding-top: calc(46px + 40px);
   }
 
   // ==========================================

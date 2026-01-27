@@ -21,10 +21,11 @@
   }
 
   &__image {
-    width: 200px;
-    height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    width: 100%;
+    margin: auto;
     overflow: hidden;
-
     position: relative; // 確保 badge 可以絕對定位
 
     @include breakpoint(md-min) {

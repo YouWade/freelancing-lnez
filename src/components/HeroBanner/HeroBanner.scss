@@ -67,15 +67,13 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 2rem;
-
+      @include breakpoint(md-max) {
+        margin-top: auto;
+      }
       .hero__content {
         display: flex;
         flex-direction: column;
         max-width: 320px;
-
-        @include breakpoint(md-max) {
-          margin-top: auto;
-        }
 
         .hero__subtitle {
           font-size: 20px;

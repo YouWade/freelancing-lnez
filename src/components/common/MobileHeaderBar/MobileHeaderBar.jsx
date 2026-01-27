@@ -74,6 +74,7 @@ const MobileHeaderBar = ({
             </button>
             <button
               className="mobile-header-bar__action-btn"
+              onClick={() => navigate('/user')}
               aria-label="用户"
             >
               <img src={Images.userIcon} alt="" />

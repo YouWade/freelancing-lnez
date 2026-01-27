@@ -98,7 +98,7 @@
   min-height: 100vh;
 
   @include breakpoint(md-max) {
-    padding-top: 0;
+    padding-top: 46px;
   }
 
   &__wrapper {
@@ -118,7 +118,7 @@
     @include breakpoint(md-max) {
       flex-direction: column;
       gap: 20px;
-      padding: 30px 20px 70px 20px;
+      padding: 30px 20px calc(150px + env(safe-area-inset-bottom)) 20px;
     }
   }
 
@@ -336,6 +336,7 @@
       flex-direction: row;
       align-items: center;
       padding: 30px;
+      padding-bottom: calc(30px + env(safe-area-inset-bottom));
       background-color: $color-light-gray;
       z-index: 100;
     }

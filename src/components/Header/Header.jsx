@@ -140,13 +140,18 @@ const Header = () => {
   // 處理搜尋提交
   const handleSearchSubmit = (e) => {
     e?.preventDefault();
-    // 只有當有輸入內容時才提交
-    if (searchQuery.trim()) {
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      // 不在搜尋頁面時才關閉搜尋列
-      if (!isSearchPage) {
-        setIsSearchOpen(false);
-      }
+
+    // 如果輸入為空，直接跳轉到搜尋頁面（不帶查詢參數）
+    if (searchQuery === '') {
+      navigate('/search');
+    } else {
+      // 有輸入內容（包括空格）時，帶著查詢參數跳轉
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+
+    // 不在搜尋頁面時才關閉搜尋列
+    if (!isSearchPage) {
+      setIsSearchOpen(false);
     }
   };
 

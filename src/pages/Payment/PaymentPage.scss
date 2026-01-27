@@ -108,7 +108,7 @@
   margin-bottom: 202px;
 
   @include breakpoint(md-max) {
-    padding-top: 0;
+    padding-top: 46px;
     padding-bottom: 113px; // 為底部 footer 預留空間
     margin-bottom: 0;
   }
