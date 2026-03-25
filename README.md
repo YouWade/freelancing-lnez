@@ -93,4 +93,8 @@ VITE_ENABLE_MOCK=true  # 是否啟用 Mock 模式
 若需修改配置，請參考 `src/constants/config.js`。
 
 ---
+
+## 網頁說明簡報
+https://docs.google.com/presentation/d/1XZeNvrJQyAn-woaf995j2aWJbw-OzVpKCiHsHvLHI6Y/edit?usp=drive_link
+
 Happy Coding! 🚀
