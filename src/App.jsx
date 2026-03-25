@@ -13,7 +13,9 @@ const LoadingFallback = () => (
   </div>
 );
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes, {
+  basename: '/freelancing-lnez',
+});
 
 const App = () => {
   return (
