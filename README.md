@@ -6,7 +6,7 @@ https://youwade.github.io/freelancing-lnez/
 
 ## Screenshots
 
-![Uploading image.png…]()
+![LNEZ Screenshot](./Readme.png)
 
 ---
 
