@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AppProvider } from '@context/AppContext';
 import ErrorBoundary from '@components/common/ErrorBoundary';
 import { routes } from './routes/index.jsx';
@@ -13,9 +13,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-const router = createBrowserRouter(routes, {
-  basename: '/freelancing-lnez',
-});
+const router = createHashRouter(routes);
 
 const App = () => {
   return (
