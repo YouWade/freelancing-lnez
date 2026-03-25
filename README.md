@@ -1,5 +1,15 @@
 # LNEZ E-Commerce Project
 
+## Live Demo
+
+https://youwade.github.io/freelancing-lnez/
+
+## Screenshots
+
+<!-- TODO: 部署完成後加上截圖 -->
+
+---
+
 這是一個使用現代前端技術構建的電商網站專案，專注於提供流暢的用戶體驗與響應式設計。
 
 ## 🚀 技術棧 (Tech Stack)
