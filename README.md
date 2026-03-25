@@ -6,7 +6,7 @@ https://youwade.github.io/freelancing-lnez/
 
 ## Screenshots
 
-<!-- TODO: 部署完成後加上截圖 -->
+![Uploading image.png…]()
 
 ---
 
